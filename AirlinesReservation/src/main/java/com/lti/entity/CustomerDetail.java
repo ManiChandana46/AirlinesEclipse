@@ -15,8 +15,7 @@ import javax.persistence.Table;
 @Table(name = "Customer_Table")
 public class CustomerDetail {
 
-	//for testing
-	//for testing again
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "Customer_id")
