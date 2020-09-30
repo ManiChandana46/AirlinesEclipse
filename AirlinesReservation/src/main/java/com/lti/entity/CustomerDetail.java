@@ -7,17 +7,20 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Customer_Entry")
+@Table(name = "Customer_Data")
 public class CustomerDetail {
 
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
+	@SequenceGenerator(name = "myseq", sequenceName = "customer_sequence", allocationSize = 10, initialValue = 100)
 	@Column(name = "Customer_id")
 	private int customerId;
 
@@ -37,7 +40,7 @@ public class CustomerDetail {
 	private LocalDate customerDateOfBirth;
 	
 	@Column(name = "Customer_phoneNo")
-	private int customerPhoneNo;
+	private String customerPhoneNo;
 
 	@OneToMany(mappedBy = "customerDetail", cascade = CascadeType.ALL)
 	private List<FlightBookingDetail> flightBookingDetails;
@@ -90,11 +93,11 @@ public class CustomerDetail {
 		this.customerDateOfBirth = customerDateOfBirth;
 	}
 
-	public int getCustomerPhoneNo() {
+	public String getCustomerPhoneNo() {
 		return customerPhoneNo;
 	}
 
-	public void setCustomerPhoneNo(int customerPhoneNo) {
+	public void setCustomerPhoneNo(String customerPhoneNo) {
 		this.customerPhoneNo = customerPhoneNo;
 	}
 
