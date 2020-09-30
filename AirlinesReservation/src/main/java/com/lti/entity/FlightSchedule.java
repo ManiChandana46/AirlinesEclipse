@@ -7,10 +7,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +20,8 @@ import javax.persistence.Table;
 public class FlightSchedule {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
+	@SequenceGenerator(name = "myseq", sequenceName = "schedule_seq", allocationSize = 1, initialValue = 400)
 	@Column(name = "Schedule_id")
 	private int scheduleId;
 	
