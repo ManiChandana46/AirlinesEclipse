@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Flight_Schedules")
+@Table(name = "Flight_Schedule_Details")
 public class FlightSchedule {
 	
 	@Id
@@ -23,12 +23,11 @@ public class FlightSchedule {
 	@Column(name = "Schedule_id")
 	private int scheduleId;
 	
-	
 	@Column(name = "Flight_departure_time")
-	private LocalTime departureTime;
+	private String departureTime;
 	
 	@Column(name = "Flight_arrival_time")
-	private LocalTime arrivalTime;
+	private String arrivalTime;
 	
 	@Column(name  = "Flight_seat_available")
 	private int seatAvailable;
@@ -61,19 +60,20 @@ public class FlightSchedule {
 		this.scheduleId = scheduleId;
 	}
 
-	public LocalTime getDepartureTime() {
+
+	public String getDepartureTime() {
 		return departureTime;
 	}
 
-	public void setDepartureTime(LocalTime departureTime) {
+	public void setDepartureTime(String departureTime) {
 		this.departureTime = departureTime;
 	}
 
-	public LocalTime getArrivalTime() {
+	public String getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(LocalTime arrivalTime) {
+	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
