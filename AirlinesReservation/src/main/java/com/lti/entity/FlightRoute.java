@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Flight_Route_Table")
+@Table(name = "Flight_Routes")
 public class FlightRoute {
 
 	@Id

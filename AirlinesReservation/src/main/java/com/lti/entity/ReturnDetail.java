@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Return_Details")
+@Table(name="Return_data")
 public class ReturnDetail {
 	
 	@Id
@@ -33,8 +33,6 @@ public class ReturnDetail {
 	@Column(name="Return_Travel_date")
 	private LocalDate returnTravelDate;
 	
-	@Column(name="Return_arrival_date")
-	private LocalDate returnArrivalDate;
 	
 	@ManyToOne
 	@JoinColumn(name="Schedule_Id")
@@ -81,14 +79,6 @@ public class ReturnDetail {
 
 	public void setReturnTravelDate(LocalDate returnTravelDate) {
 		this.returnTravelDate = returnTravelDate;
-	}
-
-	public LocalDate getReturnArrivalDate() {
-		return returnArrivalDate;
-	}
-
-	public void setReturnArrivalDate(LocalDate returnArrivalDate) {
-		this.returnArrivalDate = returnArrivalDate;
 	}
 
 	public FlightSchedule getFlightSchedule() {

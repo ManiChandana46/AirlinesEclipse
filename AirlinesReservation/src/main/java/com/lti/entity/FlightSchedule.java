@@ -1,5 +1,6 @@
 package com.lti.entity;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Flight_Scheduling")
+@Table(name = "Flight_Schedules")
 public class FlightSchedule {
 	
 	@Id
@@ -32,8 +33,8 @@ public class FlightSchedule {
 	@Column(name  = "Flight_seat_available")
 	private int seatAvailable;
 	
-	@Column( name = "Week_day")
-	private String weekDay;
+	@Column( name = "date_of_travel")
+	private LocalDate dateOfTravel;
 	
 	@Column(name = "Flight_price")
 	private double price;
@@ -84,12 +85,21 @@ public class FlightSchedule {
 		this.seatAvailable = seatAvailable;
 	}
 
-	public String getWeekDay() {
-		return weekDay;
+	
+	public LocalDate getDateOfTravel() {
+		return dateOfTravel;
 	}
 
-	public void setWeekDay(String weekDay) {
-		this.weekDay = weekDay;
+	public void setDateOfTravel(LocalDate dateOfTravel) {
+		this.dateOfTravel = dateOfTravel;
+	}
+
+	public FlightDetail getFlightDetail() {
+		return flightDetail;
+	}
+
+	public void setFlightDetail(FlightDetail flightDetail) {
+		this.flightDetail = flightDetail;
 	}
 
 	public double getPrice() {

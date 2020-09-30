@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Customer_Flight_Book_Details")
+@Table(name="Flight_Book_Details")
 public class FlightBookingDetail {
 	
 	@Id
@@ -33,9 +33,6 @@ public class FlightBookingDetail {
 	
 	@Column(name="Travel_date")
 	private LocalDate travelDate;
-	
-	@Column(name="arrival_date")
-	private LocalDate arrivalDate;
 	
 	@OneToOne
 	@JoinColumn(name="Return_Id")
@@ -95,13 +92,6 @@ public class FlightBookingDetail {
 		this.travelDate = travelDate;
 	}
 
-	public LocalDate getArrivalDate() {
-		return arrivalDate;
-	}
-
-	public void setArrivalDate(LocalDate arrivalDate) {
-		this.arrivalDate = arrivalDate;
-	}
 
 	public ReturnDetail getReturnDetail() {
 		return returnDetail;

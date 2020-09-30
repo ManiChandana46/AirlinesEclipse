@@ -1,5 +1,6 @@
 package com.lti.entity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Flight_Details")
+@Table(name = "Flights_details")
 public class FlightDetail {
 	
 	@Id
@@ -24,6 +25,12 @@ public class FlightDetail {
 	
 	@Column(name = "Flight_cabin")
 	private int cabin;
+	
+	@Column(name="initial_date")
+	private LocalDate initialDate;
+	
+	@Column(name="final_date")
+	private LocalDate finalDate;
 	
 	@OneToMany(mappedBy = "flightDetail" , cascade = CascadeType.ALL)
 	private List<FlightSchedule> flightSchedules;
@@ -59,6 +66,24 @@ public class FlightDetail {
 	public void setFlightSchedules(List<FlightSchedule> flightSchedules) {
 		this.flightSchedules = flightSchedules;
 	}
+
+	public LocalDate getInitialDate() {
+		return initialDate;
+	}
+
+	public void setInitialDate(LocalDate initialDate) {
+		this.initialDate = initialDate;
+	}
+
+	public LocalDate getFinalDate() {
+		return finalDate;
+	}
+
+	public void setFinalDate(LocalDate finalDate) {
+		this.finalDate = finalDate;
+	}
+	
+	
 
 	
 }
