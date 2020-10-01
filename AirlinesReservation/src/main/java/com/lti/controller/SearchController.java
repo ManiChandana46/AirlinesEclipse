@@ -1,0 +1,35 @@
+package com.lti.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.lti.dto.SearchDetails;
+import com.lti.dto.TotalResult;
+import com.lti.exception.AirlinesServiceException;
+import com.lti.service.SearchService;
+
+@RestController
+@CrossOrigin
+public class SearchController {
+
+	@Autowired
+	private SearchService searchService;
+	
+	@PostMapping("/search")
+	public TotalResult searchFlight(@RequestBody SearchDetails searchDetails)
+	{
+		try{
+			TotalResult totalResult=searchService.searchFlight(searchDetails);
+			return totalResult;	
+		}
+		catch (AirlinesServiceException airlines) {
+			TotalResult totalResult=new TotalResult();
+			totalResult.setStatusMessage(airlines.getMessage());
+			return totalResult;
+		}
+	}
+}
