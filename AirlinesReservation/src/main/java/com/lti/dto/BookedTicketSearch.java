@@ -10,6 +10,5 @@ public class BookedTicketSearch {
 	public void setBookingId(int bookingId) {
 		this.bookingId = bookingId;
 	}
-	
 
 }
