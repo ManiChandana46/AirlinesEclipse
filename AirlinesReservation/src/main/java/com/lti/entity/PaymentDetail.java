@@ -33,7 +33,7 @@ public class PaymentDetail {
 	private String paymentType;
 	
 	@Column(name="Payment_card_number")
-	private long cardNumber;
+	private String cardNumber;
 	
 	@OneToOne
 	@JoinColumn(name="Flight_book_Id")
@@ -71,11 +71,11 @@ public class PaymentDetail {
 		this.paymentType = paymentType;
 	}
 
-	public long getCardNumber() {
+	public String getCardNumber() {
 		return cardNumber;
 	}
 
-	public void setCardNumber(long cardNumber) {
+	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 

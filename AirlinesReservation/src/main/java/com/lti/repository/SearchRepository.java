@@ -12,7 +12,7 @@ import com.lti.dto.SearchDetails;
 import com.lti.dto.SearchResult;
 
 @Repository
-public class SearchRepository extends GenericRepository{
+public class SearchRepository {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
