@@ -21,7 +21,7 @@ public class FlightSchedule {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
-	@SequenceGenerator(name = "myseq", sequenceName = "schedule_seq", allocationSize = 1, initialValue = 400)
+	@SequenceGenerator(name = "myseq", sequenceName = "schedule_sequence", allocationSize = 1, initialValue = 2000)
 	@Column(name = "Schedule_id")
 	private int scheduleId;
 	
