@@ -17,14 +17,11 @@ public class BookingDetailService {
 
 		try {
 			int rId = repo.isReturnIdPresent(bookingId);
-			System.out.println("Nullllllll");
 			if (rId == 0) {
-				System.out.println("Nulllllllllllllllllllllll");
 				return repo.searchBooking(bookingId);
 			} else {
 				return repo.searchReturnBooking(bookingId, rId);
 			}
-			// return repo.searchReturnBooking(bookingId,rId);
 		} catch (Exception e) {
 			throw new AirlinesServiceException("Invalid Ticket No!!");
 		}

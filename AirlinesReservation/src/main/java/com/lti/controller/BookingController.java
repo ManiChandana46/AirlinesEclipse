@@ -1,6 +1,7 @@
 package com.lti.controller;
 
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.lti.dto.BookedTicketSearch;
 import com.lti.dto.BookingDetail;
 import com.lti.dto.ReturnDetail;
 import com.lti.service.BookingDetailService;
+import java.lang.Object;
 
 @RestController
 @CrossOrigin
@@ -28,7 +30,7 @@ public class BookingController {
 		String[] str = new String[30];
 		str = service.searchBooking(bookedTicketSearch.getBookingId());
 		BookingDetail obj1 = new BookingDetail();
-		ReturnDetail obj2 = new ReturnDetail();
+		
 
 		obj1.setBookingId(Integer.parseInt(str[0]));
 		obj1.setNumberOfSeats(Integer.parseInt(str[1]));
@@ -43,7 +45,11 @@ public class BookingController {
 		obj1.setTo(str[9]);
 		obj1.setDuration(str[10]);
 		obj1.setDateOfBooking(LocalDateTime.parse(str[11]));
+		//obj1.setReturnDetail((ReturnDetail)str[12]);
 
+		if(str[12]!=null) {
+		ReturnDetail obj2 = new ReturnDetail();
+		System.out.println(str[12]);
 		obj2.setReturnId(Integer.parseInt(str[12]));
 		obj2.setNumberOfSeats(Integer.parseInt(str[13]));
 		obj2.setClassType(str[14]);
@@ -55,6 +61,8 @@ public class BookingController {
 		obj2.setFrom(str[20]);
 		obj2.setTo(str[21]);
 		obj1.setReturnDetail(obj2);
+		}
+		
 
 		return obj1;
 	}

@@ -39,7 +39,6 @@ public class BookingDeatailRepo {
 		str[9] = "" + details.getFlightSchedule().getFlightRoute().getCityTo();
 		str[10] = "" + details.getFlightSchedule().getFlightRoute().getDuration();
 		str[11] = "" + details.getPaymentDetail().getTransactionTime();
-		str[12] = "" + details.getReturnDetail();
 
 		return str;
 	}
@@ -57,8 +56,6 @@ public class BookingDeatailRepo {
 		 * SimpleDateFormat("dd-MM-yyyy");
 		 */
 		//System.out.println(details.getReturnId());
-		System.out.println(details1.getBookId());
-		System.out.println(details.getReturnId());
 		String[] str = new String[30];
 		str[0] = "" + details1.getBookId(); // dateFormat.format(date2); //booking date
 		str[1] = "" + details1.getNoOfSeats(); // dateFormat.format(date1); //date of journey
@@ -91,9 +88,13 @@ public class BookingDeatailRepo {
 	}
 
 	public int isReturnIdPresent(int bookingId) {
-		String jpql = "select b.returnDetail from FlightBookingDetail b where b.bookId= :book";
-		Query q = entityManager.createQuery(jpql);
-		ReturnDetail result = (ReturnDetail) q.setParameter("book", bookingId).getSingleResult();
+//		String jpql = "select b.returnDetail from FlightBookingDetail b where b.bookId= :book";
+//		Query q = entityManager.createQuery(jpql);
+		//ReturnDetail result = (ReturnDetail) q.setParameter("book", bookingId).getSingleResult();
+		
+		FlightBookingDetail d1 = entityManager.find(FlightBookingDetail.class, bookingId);
+		ReturnDetail result = d1.getReturnDetail();
+		
 		if (result != null) {
 			return result.getReturnId();
 		} else {
