@@ -1,5 +1,6 @@
 package com.lti.exception;
 
+@SuppressWarnings("serial")
 public class PassengerServiceException extends RuntimeException {
 
 	public PassengerServiceException() {
