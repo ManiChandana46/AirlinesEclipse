@@ -1,33 +1,44 @@
 package com.lti.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lti.entity.PaymentDetail;
-import com.lti.repository.GenericRepository;
+import com.lti.dto.PaymentDto;
+import com.lti.dto.PaymentStatus;
+
+import com.lti.exception.AirlinesServiceException;
+import com.lti.service.PaymentService;
 
 @RestController
+@CrossOrigin
 public class PaymentController {
 
 	@Autowired
-	private GenericRepository gr;
-	
-	@GetMapping( path = "/payment")
-	public boolean addPayment(@RequestParam("amount") int amount ) {
+	private PaymentService paymentService;
+
+	@Autowired
+	private PaymentStatus paymentStatus;
+
+	@PostMapping(path = "/payment")
+	public PaymentStatus addPayment(@RequestBody PaymentDto paymentDto) {
 		try {
-		PaymentDetail pd = new PaymentDetail();
-		pd.setCardNumber("1234567891234567");
-		pd.setTransactionAmount(amount);
-		gr.save(pd);
-		return true;
+
+			return paymentService.flightBooking(paymentDto);
+
+		} catch (AirlinesServiceException e) {
+
+			paymentStatus.setStatus(false);
+			paymentStatus.setStatusMessage("Payment Failed");
+			paymentStatus.setTransactionId(0);
+			paymentStatus.setBookingId(0);
+
+			return paymentStatus;
 		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+
 	}
 }

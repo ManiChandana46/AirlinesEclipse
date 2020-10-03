@@ -4,6 +4,15 @@ public class LoginStatus extends Status {
 
 	private String firstName;
 	private String lastName;
+	private int customerId;
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
 
 	public String getFirstName() {
 		return firstName;

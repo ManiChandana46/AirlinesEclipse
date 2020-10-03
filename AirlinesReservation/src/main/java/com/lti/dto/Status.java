@@ -4,15 +4,6 @@ public class Status {
 
 	private boolean status;
 	private String statusMessage;
-	private int customerId;
-
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
 
 	public boolean isStatus() {
 		return status;
