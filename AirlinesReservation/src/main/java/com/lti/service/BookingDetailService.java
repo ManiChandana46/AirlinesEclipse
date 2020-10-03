@@ -30,7 +30,14 @@ public class BookingDetailService {
 			searchBookingDto.setSeatSelected(flightBookingDetail.getSeatSelected());
 			searchBookingDto.setFlightClass(flightBookingDetail.getFlightClass());
 			searchBookingDto.setTravelDate(flightBookingDetail.getTravelDate());
-
+			//searchBookingDto.setDateOfBooking(flightBookingDetail.getPaymentDetail().getTransactionTime());
+			//searchBookingDto.setPrice(flightBookingDetail.getPaymentDetail().getTransactionAmount());
+			searchBookingDto.setEndTime(flightBookingDetail.getFlightSchedule().getArrivalTime());
+			searchBookingDto.setStartTime(flightBookingDetail.getFlightSchedule().getDepartureTime());
+			searchBookingDto.setTo(flightBookingDetail.getFlightSchedule().getFlightRoute().getCityTo());
+			searchBookingDto.setFrom(flightBookingDetail.getFlightSchedule().getFlightRoute().getCityFrom());
+			searchBookingDto.setDuration(flightBookingDetail.getFlightSchedule().getFlightRoute().getDuration());
+			
 			int returnId = bookingDetailRepo.isReturnAvailable(bookingId);
 			if (returnId != 0) {
 				ReturnDetail returnDetail = bookingDetailRepo.fetchReturnDetails(returnId);
@@ -39,6 +46,14 @@ public class BookingDetailService {
 				searchBookingDto.setReturnSeatSelected(returnDetail.getSeatSelected());
 				searchBookingDto.setReturnFlightClass(returnDetail.getReturnClass());
 				searchBookingDto.setReturnTravelDate(returnDetail.getReturnTravelDate());
+				//searchBookingDto.setReturndateOfBooking(returnDetail.getFlightBookingdetail().getPaymentDetail().getTransactionTime());
+				searchBookingDto.setReturnTo(returnDetail.getFlightSchedule().getFlightRoute().getCityTo());
+				searchBookingDto.setReturnFrom(returnDetail.getFlightSchedule().getFlightRoute().getCityFrom());
+				searchBookingDto.setReturnDuration(returnDetail.getFlightSchedule().getFlightRoute().getDuration());
+				searchBookingDto.setReturnEndTime(returnDetail.getFlightSchedule().getArrivalTime());
+				searchBookingDto.setReturnStartTime(returnDetail.getFlightSchedule().getDepartureTime());
+				
+				
 
 				return searchBookingDto;
 			} else {

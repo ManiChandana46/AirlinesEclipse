@@ -1,6 +1,7 @@
 package com.lti.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,136 @@ public class SearchBookingDto {
 	private int returnNoOfSeats;
 	private String returnSeatSelected;
 	private String returnFlightClass;
+	//private LocalDateTime dateOfBooking;
+	private String to;
+	private String from;
+	private String startTime;
+	private String endTime;
+	private double price;
+	private LocalDate returnTravelDate;
+	//private LocalDateTime returndateOfBooking;
+	private String returnTo;
+	private String returnFrom;
+	private String returnStartTime;
+	private String returnEndTime;
+	private double returnPrice;
+	private int duration;
+	private int returnDuration;
+	
+	
+	
+
+	public int getReturnDuration() {
+		return returnDuration;
+	}
+
+	public void setReturnDuration(int returnDuration) {
+		this.returnDuration = returnDuration;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	/*public LocalDateTime getDateOfBooking() {
+		return dateOfBooking;
+	}
+
+	public void setDateOfBooking(LocalDateTime localDateTime) {
+		this.dateOfBooking = localDateTime;
+	}*/
+
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+
+	public String getFrom() {
+		return from;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	/*public LocalDateTime getReturndateOfBooking() {
+		return returndateOfBooking;
+	}
+
+	public void setReturndateOfBooking(LocalDateTime returndateOfBooking) {
+		this.returndateOfBooking = returndateOfBooking;
+	}*/
+
+	public String getReturnTo() {
+		return returnTo;
+	}
+
+	public void setReturnTo(String returnTo) {
+		this.returnTo = returnTo;
+	}
+
+	public String getReturnFrom() {
+		return returnFrom;
+	}
+
+	public void setReturnFrom(String returnFrom) {
+		this.returnFrom = returnFrom;
+	}
+
+	public String getReturnStartTime() {
+		return returnStartTime;
+	}
+
+	public void setReturnStartTime(String returnStartTime) {
+		this.returnStartTime = returnStartTime;
+	}
+
+	public String getReturnEndTime() {
+		return returnEndTime;
+	}
+
+	public void setReturnEndTime(String returnEndTime) {
+		this.returnEndTime = returnEndTime;
+	}
+
+	public double getReturnPrice() {
+		return returnPrice;
+	}
+
+	public void setReturnPrice(double returnPrice) {
+		this.returnPrice = returnPrice;
+	}
 
 	public int getBookId() {
 		return bookId;
@@ -97,6 +228,6 @@ public class SearchBookingDto {
 		this.returnTravelDate = returnTravelDate;
 	}
 
-	private LocalDate returnTravelDate;
+	
 
 }
