@@ -17,6 +17,14 @@ public class RegisterRepo {
 	public void addRegistration(CustomerDetail newRegister) {
 		entityManager.persist(newRegister);
 	}
+	
+	public boolean isCustomerPresent(String email) {
+		return (Long)
+				entityManager
+				.createQuery("select count(c.customerId) from CustomerDetail c where c.customerEmail= :em")
+				.setParameter("em", email)
+				.getSingleResult()==1 ? true:false;
+	}
 
 
 }

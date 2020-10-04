@@ -28,5 +28,12 @@ public class RegistrationService {
 			throw new AirlinesServiceException("User already registred!!");
 		}
 	}
+	public boolean customerCheck(String email) {
+		try {
+			return repo.isCustomerPresent(email);
+		}catch(Exception e){
+			throw new AirlinesServiceException("customer is  already registered");
+		}
+	}
 
 }

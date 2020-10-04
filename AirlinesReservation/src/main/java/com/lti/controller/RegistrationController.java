@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.lti.dto.EmailCustomerCheck;
 import com.lti.dto.Status;
 import com.lti.entity.CustomerDetail;
 import com.lti.exception.AirlinesServiceException;
@@ -20,11 +20,19 @@ public class RegistrationController {
 	@PostMapping(path="/addregistration")
 	public Status addRegistration(@RequestBody CustomerDetail newRegister) {
 		try {
-			service.addRegistration(newRegister);
 			Status status = new Status();
-			status.setStatusMessage("Registeration done");
-			status.setStatus(true);
-			return status;
+			if(service.customerCheck(newRegister.getCustomerEmail())) {
+				service.addRegistration(newRegister);
+				
+				status.setStatusMessage("Registeration done");
+				status.setStatus(true);
+				return status;
+			}
+			else {
+				status.setStatusMessage("already a registered customer");
+				status.setStatus(true);
+				return status;
+			}
 		} 
 		catch (AirlinesServiceException e) {
 			Status status = new Status();
@@ -33,5 +41,27 @@ public class RegistrationController {
 			return status;
 		}
 	}
+	@PostMapping(path="/checkregistration")
+	public Status checkRegistration(@RequestBody EmailCustomerCheck check) {
+		try {
+			if(service.customerCheck(check.email)) {
+				Status status = new Status();
+				
+				status.setStatus(true);
+				return status;
+			}
+			else {
+				Status status=new Status();
+				status.setStatus(false);
+				return status;
+			}
+		} 
+		catch (AirlinesServiceException e) {
+			Status status = new Status();
+			status.setStatusMessage(e.getMessage());
+			return status;
+		}
+	}
+	
 
 }
