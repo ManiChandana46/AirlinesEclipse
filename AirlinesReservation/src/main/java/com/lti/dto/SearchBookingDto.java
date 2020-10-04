@@ -1,7 +1,6 @@
 package com.lti.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
@@ -52,14 +51,6 @@ public class SearchBookingDto {
 		this.duration = duration;
 	}
 
-	/*public LocalDateTime getDateOfBooking() {
-		return dateOfBooking;
-	}
-
-	public void setDateOfBooking(LocalDateTime localDateTime) {
-		this.dateOfBooking = localDateTime;
-	}*/
-
 	public String getTo() {
 		return to;
 	}
@@ -99,14 +90,6 @@ public class SearchBookingDto {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
-	/*public LocalDateTime getReturndateOfBooking() {
-		return returndateOfBooking;
-	}
-
-	public void setReturndateOfBooking(LocalDateTime returndateOfBooking) {
-		this.returndateOfBooking = returndateOfBooking;
-	}*/
 
 	public String getReturnTo() {
 		return returnTo;
