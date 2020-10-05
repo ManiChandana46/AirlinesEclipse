@@ -24,18 +24,34 @@ public class BookingController {
 	public SearchBookingDto searchBooking(@RequestBody BookedTicketSearch bookedTicketSearch) {
 		return service.fetchBookingDetails(bookedTicketSearch.getBookingId());
 	}
+
 	@PostMapping(path = "/cancelbooking")
 	public Status cancelBooking(@RequestBody BookedTicketSearch bookedTicketSearch) {
 		try {
-			
+
 			return service.cancelBooking(bookedTicketSearch.getBookingId());
-				
-		} 
-		catch (AirlinesServiceException e) {
+
+		} catch (AirlinesServiceException e) {
 			Status status = new Status();
 			status.setStatusMessage(e.getMessage());
 			status.setStatus(false);
 			return status;
 		}
 	}
+	
+	@PostMapping(path = "/cancelreturnbooking")
+	public Status cancelReturnBooking(@RequestBody BookedTicketSearch bookedTicketSearch) {
+		try {
+
+			return service.cancelReturnBooking(bookedTicketSearch.getBookingId());
+
+		} catch (AirlinesServiceException e) {
+			Status status = new Status();
+			status.setStatusMessage(e.getMessage());
+			status.setStatus(false);
+			return status;
+		}
+	}
+	
+	
 }

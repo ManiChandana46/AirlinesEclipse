@@ -31,14 +31,14 @@ public class BookingDetailService {
 			searchBookingDto.setSeatSelected(flightBookingDetail.getSeatSelected());
 			searchBookingDto.setFlightClass(flightBookingDetail.getFlightClass());
 			searchBookingDto.setTravelDate(flightBookingDetail.getTravelDate());
-			//searchBookingDto.setDateOfBooking(flightBookingDetail.getPaymentDetail().getTransactionTime());
-			//searchBookingDto.setPrice(flightBookingDetail.getPaymentDetail().getTransactionAmount());
+			// searchBookingDto.setDateOfBooking(flightBookingDetail.getPaymentDetail().getTransactionTime());
+			// searchBookingDto.setPrice(flightBookingDetail.getPaymentDetail().getTransactionAmount());
 			searchBookingDto.setEndTime(flightBookingDetail.getFlightSchedule().getArrivalTime());
 			searchBookingDto.setStartTime(flightBookingDetail.getFlightSchedule().getDepartureTime());
 			searchBookingDto.setTo(flightBookingDetail.getFlightSchedule().getFlightRoute().getCityTo());
 			searchBookingDto.setFrom(flightBookingDetail.getFlightSchedule().getFlightRoute().getCityFrom());
 			searchBookingDto.setDuration(flightBookingDetail.getFlightSchedule().getFlightRoute().getDuration());
-			
+
 			int returnId = bookingDetailRepo.isReturnAvailable(bookingId);
 			if (returnId != 0) {
 				ReturnDetail returnDetail = bookingDetailRepo.fetchReturnDetails(returnId);
@@ -47,14 +47,12 @@ public class BookingDetailService {
 				searchBookingDto.setReturnSeatSelected(returnDetail.getSeatSelected());
 				searchBookingDto.setReturnFlightClass(returnDetail.getReturnClass());
 				searchBookingDto.setReturnTravelDate(returnDetail.getReturnTravelDate());
-				//searchBookingDto.setReturndateOfBooking(returnDetail.getFlightBookingdetail().getPaymentDetail().getTransactionTime());
+				// searchBookingDto.setReturndateOfBooking(returnDetail.getFlightBookingdetail().getPaymentDetail().getTransactionTime());
 				searchBookingDto.setReturnTo(returnDetail.getFlightSchedule().getFlightRoute().getCityTo());
 				searchBookingDto.setReturnFrom(returnDetail.getFlightSchedule().getFlightRoute().getCityFrom());
 				searchBookingDto.setReturnDuration(returnDetail.getFlightSchedule().getFlightRoute().getDuration());
 				searchBookingDto.setReturnEndTime(returnDetail.getFlightSchedule().getArrivalTime());
 				searchBookingDto.setReturnStartTime(returnDetail.getFlightSchedule().getDepartureTime());
-				
-				
 
 				return searchBookingDto;
 			} else {
@@ -70,31 +68,49 @@ public class BookingDetailService {
 		}
 
 	}
+
 	public Status cancelBooking(int bookingId) {
 		try {
 			int returnId = bookingDetailRepo.isReturnAvailable(bookingId);
 			if (returnId != 0) {
+				bookingDetailRepo.cancelBooking(returnId);
 				bookingDetailRepo.deleteReturnBooking(returnId);
 				bookingDetailRepo.deleteBooking(bookingId);
-				Status status = new Status();
-				status.setStatusMessage("Your booking and return Ticket has been cancelled and you will recieve refund within 90 working days");
-				status.setStatus(true);
-				return status;
-				
-				
-			}
-			else {
+			} else {
 				bookingDetailRepo.deleteBooking(bookingId);
-				Status status = new Status();
-				status.setStatusMessage("your booking ticket has been cancelled and you will receive refund within 90 days thankyou");
-				status.setStatus(true);
-				return status;
 			}
-			
-		}catch(Exception e) {
+			Status status = new Status();
+			status.setStatusMessage(
+					"your booking ticket has been cancelled and you will receive refund within 90 days thankyou");
+			status.setStatus(true);
+			return status;
+
+		} catch (Exception e) {
 			throw new AirlinesServiceException("Invalid Booking Id");
 		}
-		
+
+	}
+
+	public Status cancelReturnBooking(int bookingId) {
+		try {
+			int returnId = bookingDetailRepo.isReturnAvailable(bookingId);
+			if (returnId == 0) {
+				throw new AirlinesServiceException("Return Not Available");
+			}
+			bookingDetailRepo.cancelBooking(returnId);
+			bookingDetailRepo.deleteReturnBooking(returnId);
+
+			Status status = new Status();
+			status.setStatusMessage(
+					"Your booking and return Ticket has been cancelled and you will recieve refund within 90 working days");
+			status.setStatus(true);
+
+			return status;
+
+		} catch (Exception e) {
+			throw new AirlinesServiceException("Invalid Booking Id");
+		}
+
 	}
 
 }

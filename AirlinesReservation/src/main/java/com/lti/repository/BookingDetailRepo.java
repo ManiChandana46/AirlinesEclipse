@@ -35,19 +35,32 @@ public class BookingDetailRepo {
 		}
 		return 0;
 	}
+
 	public void deleteBooking(int bookingId) {
-		//FlightBookingDetail cancel = genericRepository.fetchById(FlightBookingDetail.class,bookingId);
-		entityManager
-		.createQuery("delete from BookingDetail b where b.bookId= :bookId")
-		.setParameter("bookId", bookingId)
-		.executeUpdate();
+		// FlightBookingDetail cancel =
+		// genericRepository.fetchById(FlightBookingDetail.class,bookingId);
+		entityManager.createQuery("delete from PassengerDetail p where p.flightBookingDetail.bookId= :bookId")
+				.setParameter("bookId", bookingId).executeUpdate();
+
+		entityManager.createQuery("delete from PaymentDetail p where p.flightBookingDetail.bookId= :bookId")
+				.setParameter("bookId", bookingId).executeUpdate();
+
+		entityManager.createQuery("delete from FlightBookingDetail b where b.bookId= :bookId")
+				.setParameter("bookId", bookingId).executeUpdate();
 	}
+
 	public void deleteReturnBooking(int returnId) {
-		//ReturnDetail cancel = genericRepository.fetchById(ReturnDetail.class,returnId);
-		entityManager
-		.createQuery("delete from ReturnDetail r where r.returnId= :returnId")
-		.setParameter("returnId", returnId)
-		.executeUpdate();
+		// ReturnDetail cancel =
+		// genericRepository.fetchById(ReturnDetail.class,returnId);
+
+		entityManager.createQuery("delete from ReturnDetail r where r.returnId= :returnId")
+				.setParameter("returnId", returnId).executeUpdate();
+	}
+
+	public void cancelBooking(int returnId) {
+		entityManager.createQuery(
+				"update FlightBookingDetail b set b.returnDetail.returnId= null where b.returnDetail.returnId= :returnId")
+				.setParameter("returnId", returnId).executeUpdate();
 	}
 
 }
