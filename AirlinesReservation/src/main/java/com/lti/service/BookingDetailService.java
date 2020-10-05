@@ -81,7 +81,7 @@ public class BookingDetailService {
 			}
 			Status status = new Status();
 			status.setStatusMessage(
-					"your booking ticket has been cancelled and you will receive refund within 90 days thankyou");
+					"your booked ticket has been cancelled and you will receive refund within 3 days");
 			status.setStatus(true);
 			return status;
 
@@ -102,7 +102,7 @@ public class BookingDetailService {
 
 			Status status = new Status();
 			status.setStatusMessage(
-					"Your booking and return Ticket has been cancelled and you will recieve refund within 90 working days");
+					"Your Return Ticket has been cancelled and you will recieve refund within 3 working days");
 			status.setStatus(true);
 
 			return status;
