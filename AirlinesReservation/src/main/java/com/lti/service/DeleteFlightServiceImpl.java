@@ -33,46 +33,53 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 		try {
 			int flightId = deleteFlightRepository.flightIdByFlightNumber(flightNumber);
 			int scheduleId = deleteFlightRepository.scheduleIdByFlightIdAndTravelDate(flightId, travelDate);
-			List<Integer> flightBookIdList = deleteFlightRepository.listOfBookIdByScheduleId(scheduleId);
-			List<Integer> returnIdList = deleteFlightRepository.listOfReturnIdByScheduleId(scheduleId);
-			List<Integer> customerIdList =  null;
-			if(returnIdList != null) {
-				for(int returnId : returnIdList) {
-					int bookId = deleteFlightRepository.bookIdByReturnId(returnId);
-					customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
-					deleteFlightRepository.refereneceDeletionOfReturnIdFromBookTable(returnId);
-					deleteFlightRepository.deleteReturnDetailByReturnId(returnId);
-				}
-			}
-			if(flightBookIdList != null) {
-				for(int bookId : flightBookIdList) {
-					customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
-					if(deleteFlightRepository.isReturnPresent(bookId) != 0) {
-						FlightBookingDetail flightBookingDetail = genericRepository.fetchById(FlightBookingDetail.class, bookId);
-						flightBookingDetail.setFlightClass(null);
-						flightBookingDetail.setNoOfSeats(0);
-						flightBookingDetail.setTravelDate(null);
-						flightBookingDetail.setSeatSelected(null);
-						flightBookingDetail.setFlightSchedule(null);
-						genericRepository.save(flightBookingDetail);
-					}
-					else {
-						deleteFlightRepository.deletePassengerByBookId(bookId);
-						deleteFlightRepository.deletePaymentByBookId(bookId);
-						deleteFlightRepository.deleteBookingByBookId(bookId);
+			
+			if(scheduleId != 0) {
+				List<Integer> flightBookIdList = deleteFlightRepository.listOfBookIdByScheduleId(scheduleId);
+				List<Integer> returnIdList = deleteFlightRepository.listOfReturnIdByScheduleId(scheduleId);
+				List<Integer> customerIdList =  null;
+			
+				if(returnIdList != null) {
+					for(int returnId : returnIdList) {
+						int bookId = deleteFlightRepository.bookIdByReturnId(returnId);
+						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
+						deleteFlightRepository.refereneceDeletionOfReturnIdFromBookTable(returnId);
+						deleteFlightRepository.deleteReturnDetailByReturnId(returnId);
 					}
 				}
+				
+				if(flightBookIdList != null) {
+				
+					for(int bookId : flightBookIdList) {
+						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
+					
+						if(deleteFlightRepository.isReturnPresent(bookId) != 0) {
+							FlightBookingDetail flightBookingDetail = genericRepository.fetchById(FlightBookingDetail.class, bookId);
+							flightBookingDetail.setFlightClass("");
+							flightBookingDetail.setNoOfSeats(0);
+							flightBookingDetail.setTravelDate(null);
+							flightBookingDetail.setSeatSelected("");
+							flightBookingDetail.setFlightSchedule(null);
+							genericRepository.save(flightBookingDetail);
+						}
+						
+						else {
+							deleteFlightRepository.deletePassengerByBookId(bookId);
+							deleteFlightRepository.deletePaymentByBookId(bookId);
+							deleteFlightRepository.deleteBookingByBookId(bookId);
+						}
+					}
+				}
+
+				deleteFlightRepository.deleteFlightScheduleByFlightIdAndTravelDate(flightId, travelDate);
 			}
-
-			deleteFlightRepository.deleteFlightScheduleByFlightIdAndTravelDate(flightId, travelDate);
-
 			deleteFlightStatusDto.setStatus(true);
 			deleteFlightStatusDto.setMessage("Flight Deleted!");
 		}
 		catch(Exception e) {
 			throw new AirlinesServiceException("Delete Flight failed!", e);
 		}
-		
+
 		return deleteFlightStatusDto;
 	}
 }
