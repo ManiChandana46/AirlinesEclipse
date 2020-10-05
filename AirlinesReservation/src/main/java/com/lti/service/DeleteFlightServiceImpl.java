@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lti.dto.DeleteFlightStatusDto;
 import com.lti.exception.AirlinesServiceException;
 import com.lti.repository.DeleteFlightRepository;
-import com.lti.repository.GenericRepository;
 
 @Service
 @Transactional
@@ -22,13 +21,9 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 	private DeleteFlightRepository deleteFlightRepository;
 
 	@Autowired
-	private GenericRepository genericRepository;
-
-	@Autowired
 	private DeleteFlightStatusDto deleteFlightStatusDto;
 
 	@Override
-	@SuppressWarnings("null")
 	public DeleteFlightStatusDto deleteFlight(int flightNumber, LocalDate travelDate) {
 		try {
 			int flightId = deleteFlightRepository.flightIdByFlightNumber(flightNumber);
@@ -37,11 +32,11 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 			if(scheduleId != 0) {
 				List<Integer> flightBookIdList = deleteFlightRepository.listOfBookIdByScheduleId(scheduleId);
 				List<Integer> returnIdList = deleteFlightRepository.listOfReturnIdByScheduleId(scheduleId);
-				//System.out.println("hello");
+				
 				List<Integer> customerIdList =  new ArrayList<>();
 			
 				if(!returnIdList.isEmpty()) {
-					//System.out.println("Inside ReturnList");
+					
 					for(int returnId : returnIdList) {
 						int bookId = deleteFlightRepository.bookIdByReturnId(returnId);
 						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
@@ -56,7 +51,7 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
 						
 						int returnId=deleteFlightRepository.isReturnPresent(bookId);
-						//System.out.println(returnId);
+						
 					
 						if(returnId != 0) {
 							deleteFlightRepository.refereneceDeletionOfReturnIdFromBookTable(returnId);
