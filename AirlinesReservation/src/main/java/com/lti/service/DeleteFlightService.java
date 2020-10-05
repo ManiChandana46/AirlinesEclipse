@@ -1,5 +1,11 @@
 package com.lti.service;
 
-public class DeleteFlightService {
+import java.time.LocalDate;
+
+import com.lti.dto.DeleteFlightStatusDto;
+
+public interface DeleteFlightService {
+
+	DeleteFlightStatusDto deleteFlight(int flightNumber, LocalDate travelDate);
 
 }
