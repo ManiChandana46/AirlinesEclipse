@@ -1,5 +1,8 @@
 package com.lti.dto; //data transfer object
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Status {
 
 	private boolean status;
