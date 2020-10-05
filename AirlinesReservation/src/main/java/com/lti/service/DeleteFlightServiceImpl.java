@@ -1,6 +1,7 @@
 package com.lti.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lti.dto.DeleteFlightStatusDto;
-import com.lti.entity.FlightBookingDetail;
 import com.lti.exception.AirlinesServiceException;
 import com.lti.repository.DeleteFlightRepository;
 import com.lti.repository.GenericRepository;
@@ -37,9 +37,11 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 			if(scheduleId != 0) {
 				List<Integer> flightBookIdList = deleteFlightRepository.listOfBookIdByScheduleId(scheduleId);
 				List<Integer> returnIdList = deleteFlightRepository.listOfReturnIdByScheduleId(scheduleId);
-				List<Integer> customerIdList =  null;
+				//System.out.println("hello");
+				List<Integer> customerIdList =  new ArrayList<>();
 			
-				if(returnIdList != null) {
+				if(!returnIdList.isEmpty()) {
+					//System.out.println("Inside ReturnList");
 					for(int returnId : returnIdList) {
 						int bookId = deleteFlightRepository.bookIdByReturnId(returnId);
 						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
@@ -52,15 +54,16 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 				
 					for(int bookId : flightBookIdList) {
 						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
+						
+						int returnId=deleteFlightRepository.isReturnPresent(bookId);
+						//System.out.println(returnId);
 					
-						if(deleteFlightRepository.isReturnPresent(bookId) != 0) {
-							FlightBookingDetail flightBookingDetail = genericRepository.fetchById(FlightBookingDetail.class, bookId);
-							flightBookingDetail.setFlightClass("");
-							flightBookingDetail.setNoOfSeats(0);
-							flightBookingDetail.setTravelDate(null);
-							flightBookingDetail.setSeatSelected("");
-							flightBookingDetail.setFlightSchedule(null);
-							genericRepository.save(flightBookingDetail);
+						if(returnId != 0) {
+							deleteFlightRepository.refereneceDeletionOfReturnIdFromBookTable(returnId);
+							deleteFlightRepository.deleteReturnDetailByReturnId(returnId);
+							deleteFlightRepository.deletePassengerByBookId(bookId);
+							deleteFlightRepository.deletePaymentByBookId(bookId);
+							deleteFlightRepository.deleteBookingByBookId(bookId);
 						}
 						
 						else {

@@ -65,7 +65,7 @@ public class DeleteFlightRepositoryImpl implements DeleteFlightRepository {
 	@Override
 	public void refereneceDeletionOfReturnIdFromBookTable(int returnId) {
 		entityManager
-		.createQuery("update FlightBookingDetail b set b.returnDetail.returnId= 0 where b.returnDetail.returnId= :returnId")
+		.createQuery("update FlightBookingDetail b set b.returnDetail.returnId= null where b.returnDetail.returnId= :returnId")
 		.setParameter("returnId", returnId)
 		.executeUpdate();
 	}
