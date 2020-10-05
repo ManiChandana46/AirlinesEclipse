@@ -21,7 +21,7 @@ public class RegistrationController {
 	public Status addRegistration(@RequestBody CustomerDetail newRegister) {
 		try {
 			Status status = new Status();
-			if(service.customerCheck(newRegister.getCustomerEmail())) {
+			if(!service.customerCheck(newRegister.getCustomerEmail())) {
 				service.addRegistration(newRegister);
 				
 				status.setStatusMessage("Registeration done");
