@@ -23,6 +23,13 @@ public class LoginRepositoryImpl implements LoginRepository {
 		return (Integer) entityManager.createQuery("select c.customerId from CustomerDetail c where c.customerEmail =:em and c.customerPassword =:pw")
 				.setParameter("em", email).setParameter("pw", password).getSingleResult();
 	}
+	
+	@Override
+	public int findByEmail(String email) {
+		return (Integer) entityManager
+				.createQuery("select c.customerId from CustomerDetail c where c.customerEmail =:em")
+				.setParameter("em", email).getSingleResult();
+	}
 
 	@Override
 	public boolean isCustomerPresent(String email) {

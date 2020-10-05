@@ -10,4 +10,6 @@ public interface LoginRepository {
 
 	CustomerDetail findById(int id);
 
+	int findByEmail(String email);
+
 }
