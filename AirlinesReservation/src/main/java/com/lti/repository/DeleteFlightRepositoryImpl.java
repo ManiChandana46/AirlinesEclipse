@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.lti.entity.FlightBookingDetail;
 
 @Repository
-public class DeleteFlightRepositoryImpl implements DeleteFlighRepository {
+public class DeleteFlightRepositoryImpl implements DeleteFlightRepository {
 
 	@Autowired
 	private GenericRepository genericRepository;
@@ -34,7 +34,7 @@ public class DeleteFlightRepositoryImpl implements DeleteFlighRepository {
 	@Override
 	public int scheduleIdByFlightIdAndTravelDate(int flightId , LocalDate travelDate) {
 		return (Integer) entityManager
-						 .createQuery("select s.scheduleId from FlightSchedule s where s.flightDetail.flightId= :flightId and s.travelDate= :travelDate")
+						 .createQuery("select s.scheduleId from FlightSchedule s where s.flightDetail.flightId= :flightId and s.dateOfTravel= :travelDate")
 						 .setParameter("flightId", flightId)
 						 .setParameter("travelDate", travelDate)
 						 .getSingleResult();
@@ -49,6 +49,33 @@ public class DeleteFlightRepositoryImpl implements DeleteFlighRepository {
 					.createQuery("select b.bookId from FlightBookingDetail b where b.flightSchedule.scheduleId= :scheduleId")
 					.setParameter("scheduleId", scheduleId)
 					.getResultList());		
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Integer> listOfReturnIdByScheduleId(int scheduleId) {
+		
+		return  new ArrayList<Integer>
+					(entityManager
+					.createQuery("select r.returnId from ReturnDetail r where r.flightSchedule.scheduleId= :scheduleId")
+					.setParameter("scheduleId", scheduleId)
+					.getResultList());		
+	}
+	
+	@Override
+	public void refereneceDeletionOfReturnIdFromBookTable(int returnId) {
+		entityManager
+		.createQuery("update FlightBookingDetail b set b.returnDetail.returnId= 0 where b.returnDetail.returnId= :returnId")
+		.setParameter("returnId", returnId)
+		.executeUpdate();
+	}
+	
+	@Override
+	public int bookIdByReturnId(int returnId) {
+		return (Integer) entityManager
+						.createQuery("select b.bookId from FlightBookingDetail b where b.returnDetail.returnId= :returnId")
+						.setParameter("returnId", returnId)
+						.getSingleResult();
 	}
 	
 	@Override
@@ -69,6 +96,14 @@ public class DeleteFlightRepositoryImpl implements DeleteFlighRepository {
 							 .getSingleResult();
 		}
 		return 0;
+	}
+	
+	@Override
+	public void deletionFromReturnDetail(int returnId) {
+		entityManager
+		.createQuery("delete from ReturnDetail r where r.returnId= :returnId")
+		.setParameter("returnId", returnId)
+		.executeUpdate();
 	}
 	
 	@Override
@@ -96,17 +131,17 @@ public class DeleteFlightRepositoryImpl implements DeleteFlighRepository {
 	}
 	
 	@Override
-	public void deleteBookingByScheduleId(int scheduleId) {
+	public void deleteBookingByBookId(int bookId) {
 		entityManager
-		.createQuery("delete from FlightBookingDetail f where f.flightSchedule.scheduleId= :scheduleId")
-		.setParameter("scheduleId", scheduleId)
+		.createQuery("delete from FlightBookingDetail f where f.bookId= :bookId")
+		.setParameter("bookId", bookId)
 		.executeUpdate();
 	}
 	
 	@Override
 	public void deleteFlightScheduleByFlightIdAndTravelDate(int flightId , LocalDate travelDate) {
 		 entityManager
-		.createQuery("delete from FlightSchedule s where s.flightDetail.flightId= :flightId and s.travelDate= :travelDate")
+		.createQuery("delete from FlightSchedule s where s.flightDetail.flightId= :flightId and s.dateOfTravel= :travelDate")
 		.setParameter("flightId", flightId)
 		.setParameter("travelDate", travelDate)
 		.executeUpdate();
