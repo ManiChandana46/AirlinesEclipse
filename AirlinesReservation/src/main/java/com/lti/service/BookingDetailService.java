@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lti.dto.SearchBookingDto;
+import com.lti.dto.Status;
 import com.lti.entity.FlightBookingDetail;
 import com.lti.entity.ReturnDetail;
 import com.lti.exception.AirlinesServiceException;
@@ -68,6 +69,32 @@ public class BookingDetailService {
 			throw new AirlinesServiceException("Invalid Booking Id");
 		}
 
+	}
+	public Status cancelBooking(int bookingId) {
+		try {
+			int returnId = bookingDetailRepo.isReturnAvailable(bookingId);
+			if (returnId != 0) {
+				bookingDetailRepo.deleteReturnBooking(returnId);
+				bookingDetailRepo.deleteBooking(bookingId);
+				Status status = new Status();
+				status.setStatusMessage("Your booking and return Ticket has been cancelled and you will recieve refund within 90 working days");
+				status.setStatus(true);
+				return status;
+				
+				
+			}
+			else {
+				bookingDetailRepo.deleteBooking(bookingId);
+				Status status = new Status();
+				status.setStatusMessage("your booking ticket has been cancelled and you will receive refund within 90 days thankyou");
+				status.setStatus(true);
+				return status;
+			}
+			
+		}catch(Exception e) {
+			throw new AirlinesServiceException("Invalid Booking Id");
+		}
+		
 	}
 
 }

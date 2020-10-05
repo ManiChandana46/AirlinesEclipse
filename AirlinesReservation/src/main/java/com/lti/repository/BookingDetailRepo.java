@@ -35,5 +35,19 @@ public class BookingDetailRepo {
 		}
 		return 0;
 	}
+	public void deleteBooking(int bookingId) {
+		//FlightBookingDetail cancel = genericRepository.fetchById(FlightBookingDetail.class,bookingId);
+		entityManager
+		.createQuery("delete from BookingDetail b where b.bookId= :bookId")
+		.setParameter("bookId", bookingId)
+		.executeUpdate();
+	}
+	public void deleteReturnBooking(int returnId) {
+		//ReturnDetail cancel = genericRepository.fetchById(ReturnDetail.class,returnId);
+		entityManager
+		.createQuery("delete from ReturnDetail r where r.returnId= :returnId")
+		.setParameter("returnId", returnId)
+		.executeUpdate();
+	}
 
 }
