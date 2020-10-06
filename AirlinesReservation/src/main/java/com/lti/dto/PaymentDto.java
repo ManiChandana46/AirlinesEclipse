@@ -25,7 +25,7 @@ public class PaymentDto {
 	private LocalDate returnTravelDate;
 	private int returnScheduleId;
 
-	private List<PassengerDetail> passengerDetails;
+	private List<PassengerDto> passengerDetails;
 
 	public double getTransactionAmount() {
 		return transactionAmount;
@@ -147,12 +147,14 @@ public class PaymentDto {
 		this.returnScheduleId = returnScheduleId;
 	}
 
-	public List<PassengerDetail> getPassengerDetails() {
+	public List<PassengerDto> getPassengerDetails() {
 		return passengerDetails;
 	}
 
-	public void setPassengerDetails(List<PassengerDetail> passengerDetails) {
+	public void setPassengerDetails(List<PassengerDto> passengerDetails) {
 		this.passengerDetails = passengerDetails;
 	}
+
+	
 
 }

@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lti.dto.PassengerDto;
 import com.lti.dto.PaymentDto;
 import com.lti.dto.PaymentStatus;
 import com.lti.entity.FlightBookingDetail;
@@ -85,12 +86,18 @@ public class PaymentService {
 
 			paymentDetail = paymentRepository.addPayment(paymentDetail);
 
-			List<PassengerDetail> passengers = paymentDto.getPassengerDetails();
+			List<PassengerDto> passengers = paymentDto.getPassengerDetails();
 
-			for (PassengerDetail passenger : passengers) {
-				passenger.setFlightBookingDetails(flightBookingDetail);
-				paymentRepository.addPassenger(passenger);
+			for (PassengerDto passenger : passengers) {
+				//passenger.setFlightBookingDetails(flightBookingDetail);
+				paymentRepository.addPassenger(passenger,paymentDto.getScheduleId(),flightBookingDetail);
 			}
+			
+			String seats=paymentDto.getSeatSelected();
+			String seatNames[]=seats.split(",");
+			for(String s:seatNames)
+				paymentRepository.seatEntry(s,paymentDto.getScheduleId());
+				
 
 			paymentStatus.setStatus(true);
 			paymentStatus.setStatusMessage("Payment Succesfull");
