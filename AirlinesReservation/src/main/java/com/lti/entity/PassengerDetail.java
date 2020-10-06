@@ -74,12 +74,24 @@ public class PassengerDetail {
 		Male, Female
 	}
 
-	public FlightBookingDetail getFlightBookingDetails() {
+	public FlightBookingDetail getFlightBookingDetail() {
 		return flightBookingDetail;
 	}
 
-	public void setFlightBookingDetails(FlightBookingDetail flightBookingDetail) {
+	public void setFlightBookingDetail(FlightBookingDetail flightBookingDetail) {
 		this.flightBookingDetail = flightBookingDetail;
 	}
+
+	public SeatDetail getSeatDetail() {
+		return seatDetail;
+	}
+
+	public void setSeatDetail(SeatDetail seatDetail) {
+		this.seatDetail = seatDetail;
+	}
+
+	
+	
+	
 
 }
