@@ -21,7 +21,7 @@ public interface DeleteFlightRepository {
 
 	int isReturnPresent(int bookId);
 	
-	void deletionFromReturnDetail(int returnId);
+	void deleteSeatDetailByScheduleId(int scheduleId);
 
 	void deleteReturnDetailByReturnId(int returnId);
 
@@ -32,7 +32,5 @@ public interface DeleteFlightRepository {
 	void deleteBookingByBookId(int bookId);
 
 	void deleteFlightScheduleByFlightIdAndTravelDate(int flightId, LocalDate travelDate);
-
-	void deleteFlightDetailByFlightNumber(int flightNumber);
 
 }

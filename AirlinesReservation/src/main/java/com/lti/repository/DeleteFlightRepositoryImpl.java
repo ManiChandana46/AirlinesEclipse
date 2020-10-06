@@ -99,14 +99,6 @@ public class DeleteFlightRepositoryImpl implements DeleteFlightRepository {
 	}
 	
 	@Override
-	public void deletionFromReturnDetail(int returnId) {
-		entityManager
-		.createQuery("delete from ReturnDetail r where r.returnId= :returnId")
-		.setParameter("returnId", returnId)
-		.executeUpdate();
-	}
-	
-	@Override
 	public void deleteReturnDetailByReturnId(int returnId) {
 		entityManager
 		.createQuery("delete from ReturnDetail r where r.returnId= :returnId")
@@ -139,19 +131,19 @@ public class DeleteFlightRepositoryImpl implements DeleteFlightRepository {
 	}
 	
 	@Override
+	public void deleteSeatDetailByScheduleId(int scheduleId) {
+		entityManager
+		.createQuery("delete from SeatDetail s where s.flightSchedule.schduleId= :scheduleId")
+		.setParameter("scheduleId", scheduleId)
+		.executeUpdate();
+	}
+	
+	@Override
 	public void deleteFlightScheduleByFlightIdAndTravelDate(int flightId , LocalDate travelDate) {
 		 entityManager
 		.createQuery("delete from FlightSchedule s where s.flightDetail.flightId= :flightId and s.dateOfTravel= :travelDate")
 		.setParameter("flightId", flightId)
 		.setParameter("travelDate", travelDate)
-		.executeUpdate();
-	}
-	
-	@Override
-	public void deleteFlightDetailByFlightNumber(int flightNumber) {
-		 entityManager
-		.createQuery("delete from FlightDetail f where f.flightNumber= :flightNumber")
-		.setParameter("flightNumber", flightNumber)
 		.executeUpdate();
 	}
 	

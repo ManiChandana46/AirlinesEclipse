@@ -28,15 +28,15 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 		try {
 			int flightId = deleteFlightRepository.flightIdByFlightNumber(flightNumber);
 			int scheduleId = deleteFlightRepository.scheduleIdByFlightIdAndTravelDate(flightId, travelDate);
-			
+
 			if(scheduleId != 0) {
 				List<Integer> flightBookIdList = deleteFlightRepository.listOfBookIdByScheduleId(scheduleId);
 				List<Integer> returnIdList = deleteFlightRepository.listOfReturnIdByScheduleId(scheduleId);
-				
+
 				List<Integer> customerIdList =  new ArrayList<>();
-			
+
 				if(!returnIdList.isEmpty()) {
-					
+
 					for(int returnId : returnIdList) {
 						int bookId = deleteFlightRepository.bookIdByReturnId(returnId);
 						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
@@ -44,15 +44,15 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 						deleteFlightRepository.deleteReturnDetailByReturnId(returnId);
 					}
 				}
-				
+
 				if(flightBookIdList != null) {
-				
+
 					for(int bookId : flightBookIdList) {
 						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
-						
+
 						int returnId=deleteFlightRepository.isReturnPresent(bookId);
-						
-					
+
+
 						if(returnId != 0) {
 							deleteFlightRepository.refereneceDeletionOfReturnIdFromBookTable(returnId);
 							deleteFlightRepository.deleteReturnDetailByReturnId(returnId);
@@ -60,7 +60,7 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 							deleteFlightRepository.deletePaymentByBookId(bookId);
 							deleteFlightRepository.deleteBookingByBookId(bookId);
 						}
-						
+
 						else {
 							deleteFlightRepository.deletePassengerByBookId(bookId);
 							deleteFlightRepository.deletePaymentByBookId(bookId);
@@ -69,6 +69,7 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 					}
 				}
 
+				deleteFlightRepository.deleteSeatDetailByScheduleId(scheduleId);
 				deleteFlightRepository.deleteFlightScheduleByFlightIdAndTravelDate(flightId, travelDate);
 			}
 			deleteFlightStatusDto.setStatus(true);
