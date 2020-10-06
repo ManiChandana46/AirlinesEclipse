@@ -2,6 +2,7 @@ package com.lti.service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import com.lti.dto.AddFlightStatus;
 import com.lti.entity.FlightDetail;
 import com.lti.entity.FlightRoute;
 import com.lti.entity.FlightSchedule;
+import com.lti.entity.SeatDetail;
 import com.lti.exception.AirlinesServiceException;
 import com.lti.repository.AddFlightRepository;
 import com.lti.repository.GenericRepository;
@@ -19,14 +21,14 @@ import com.lti.repository.GenericRepository;
 @Service
 @Transactional
 public class AddFlightServiceImpl implements AddFlightService {
-	
+
 	@Autowired
 	private AddFlightRepository addFlightRepository;
 	@Autowired
 	private GenericRepository genericRepository;
 	@Autowired
 	private AddFlightStatus addFlightStatus;
-	
+
 	@Override
 	public FlightDetail addFlightDetails(AddFlightDto addFlightDto) {
 		try {
@@ -36,22 +38,22 @@ public class AddFlightServiceImpl implements AddFlightService {
 			flightDetail.setInitialDate(addFlightDto.getInitialDate());
 			flightDetail.setFinalDate(addFlightDto.getFinalDate());
 			return genericRepository.save(flightDetail);
-			
+
 		}
 		catch(Exception e) {
 			throw new AirlinesServiceException("Flight details not added", e);
 		}
 	}
-	
+
 	@Override
 	public FlightRoute getRouteId(AddFlightDto addFlightDto) {
 		int routeId=addFlightRepository.findRouteId(addFlightDto.getCityFrom(), addFlightDto.getCityTo());
 		return genericRepository.fetchById(FlightRoute.class,routeId);
 	}
-	
+
 	@Override
 	public AddFlightStatus addToSchedule(FlightDetail flightDetail, FlightRoute flightRoute, AddFlightDto addFlightDto) {
-		
+
 		int operationalDays=(int) ChronoUnit.DAYS.between(addFlightDto.getInitialDate(), addFlightDto.getFinalDate());
 		LocalDate travelDate = addFlightDto.getInitialDate();
 
@@ -73,7 +75,17 @@ public class AddFlightServiceImpl implements AddFlightService {
 				else
 					flightSchedule.setPrice(addFlightDto.getPrice());
 
-				genericRepository.save(flightSchedule);
+				flightSchedule=genericRepository.save(flightSchedule);
+				for(int j=1;j<=10;j++) {
+					for(char a='A';a<='F';a++) {
+						SeatDetail seatDetail=new SeatDetail();
+						seatDetail.setFlightSchedule(flightSchedule);
+						seatDetail.setSeatName(j+""+a);
+						seatDetail.setStatus(false);
+						genericRepository.save(seatDetail);
+
+					}
+				}
 
 				travelDate = travelDate.plusDays(1);
 			}

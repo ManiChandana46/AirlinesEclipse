@@ -28,7 +28,7 @@ public class SearchBookingDto {
 	private String returnFrom;
 	private String returnStartTime;
 	private String returnEndTime;
-	private double returnPrice;
+	//private double returnPrice;
 	private int duration;
 	private int returnDuration;
 	
@@ -121,14 +121,6 @@ public class SearchBookingDto {
 
 	public void setReturnEndTime(String returnEndTime) {
 		this.returnEndTime = returnEndTime;
-	}
-
-	public double getReturnPrice() {
-		return returnPrice;
-	}
-
-	public void setReturnPrice(double returnPrice) {
-		this.returnPrice = returnPrice;
 	}
 
 	public int getBookId() {

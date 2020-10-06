@@ -1,5 +1,7 @@
 package com.lti.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -61,6 +63,21 @@ public class BookingDetailRepo {
 		entityManager.createQuery(
 				"update FlightBookingDetail b set b.returnDetail.returnId= null where b.returnDetail.returnId= :returnId")
 				.setParameter("returnId", returnId).executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Integer> fetchBookingId(int customerId) {
+		
+		return entityManager.createQuery("select b.bookId from FlightBookingDetail b where b.customerDetail.customerId= :c")
+					 .setParameter("c", customerId)
+					 .getResultList();
+	}
+	
+	public boolean isBookingAvailable(int customerId)
+	{
+		
+		return (Long) entityManager.createQuery("select count(b.bookId) from FlightBookingDetail b where b.customerDetail.customerId= :c")
+				.setParameter("c", customerId).getSingleResult() == 0 ? false : true;
 	}
 
 }

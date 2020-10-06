@@ -53,6 +53,9 @@ public class FlightSchedule {
 	
 	@OneToMany(mappedBy = "flightSchedule" , cascade = CascadeType.ALL)
 	private List<FlightBookingDetail> flightBookingDetails;
+	
+	@OneToMany(mappedBy ="flightSchedule")
+	private List<SeatDetail> seatDetails;
 
 	public int getScheduleId() {
 		return scheduleId;
