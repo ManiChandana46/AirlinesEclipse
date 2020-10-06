@@ -12,7 +12,6 @@ import com.lti.dto.PassengerDto;
 import com.lti.dto.PaymentDto;
 import com.lti.dto.PaymentStatus;
 import com.lti.entity.FlightBookingDetail;
-import com.lti.entity.PassengerDetail;
 import com.lti.entity.PaymentDetail;
 import com.lti.entity.ReturnDetail;
 import com.lti.exception.AirlinesServiceException;

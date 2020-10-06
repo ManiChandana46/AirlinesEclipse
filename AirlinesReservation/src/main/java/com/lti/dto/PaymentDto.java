@@ -3,7 +3,6 @@ package com.lti.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.lti.entity.PassengerDetail;
 
 public class PaymentDto {
 
