@@ -32,7 +32,7 @@ public class ViewFlightRepositoryImpl implements ViewFlightRepository {
 		return (Integer) entityManager
 						 .createQuery("select f.flightId from FlightDetail f where f.flightNumber= :flightNumber")
 						 .setParameter("flightNumber", flightNumber)
-						 //.setMaxResults(1)
+						 .setMaxResults(1)
 						 .getSingleResult();
 	}
 	
@@ -41,7 +41,7 @@ public class ViewFlightRepositoryImpl implements ViewFlightRepository {
 		 return (LocalDate) entityManager
 				 			.createQuery("select f.initialDate from FlightDetail f where f.flightNumber= :flightNumber")
 				 			.setParameter("flightNumber", flightNumber)
-				 			//.setMaxResults(1)
+				 			.setMaxResults(1)
 				 			.getSingleResult();
 	}
 	
@@ -50,7 +50,7 @@ public class ViewFlightRepositoryImpl implements ViewFlightRepository {
 		return (LocalDate) entityManager
 	 			.createQuery("select f.finalDate from FlightDetail f where f.flightNumber= :flightNumber")
 	 			.setParameter("flightNumber", flightNumber)
-	 			//.setMaxResults(1)
+	 			.setMaxResults(1)
 	 			.getSingleResult();
 
 	}
@@ -69,7 +69,7 @@ public class ViewFlightRepositoryImpl implements ViewFlightRepository {
 		return   entityManager
 				.createQuery("select r from FlightRoute r where r.routeId= :routeId",FlightRoute.class)
 				.setParameter("routeId", routeId)
-				//.setMaxResults(1)
+				.setMaxResults(1)
 				.getSingleResult();
 	}
 	
