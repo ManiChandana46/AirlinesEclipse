@@ -86,6 +86,9 @@ public class PaymentService {
 			paymentDetail = paymentRepository.addPayment(paymentDetail);
 
 			List<PassengerDto> passengers = paymentDto.getPassengerDetails();
+			
+			if(paymentRepository.isSchedulePresent(paymentDto.getScheduleId()))
+			{
 
 			for (PassengerDto passenger : passengers) {
 				//passenger.setFlightBookingDetails(flightBookingDetail);
@@ -96,6 +99,13 @@ public class PaymentService {
 			String seatNames[]=seats.split(",");
 			for(String s:seatNames)
 				paymentRepository.seatEntry(s,paymentDto.getScheduleId());
+			}
+			else {
+				for (PassengerDto passenger : passengers) {
+					paymentRepository.addPassengerwithoutSeatTable(passenger, flightBookingDetail);
+				}
+				
+			}
 				
 
 			paymentStatus.setStatus(true);
