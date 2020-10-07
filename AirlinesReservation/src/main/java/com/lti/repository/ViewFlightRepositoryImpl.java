@@ -69,7 +69,7 @@ public class ViewFlightRepositoryImpl implements ViewFlightRepository {
 		return   entityManager
 				.createQuery("select r from FlightRoute r where r.routeId= :routeId",FlightRoute.class)
 				.setParameter("routeId", routeId)
-				//.setMaxResults(1)
+				.setMaxResults(1)
 				.getSingleResult();
 	}
 	
