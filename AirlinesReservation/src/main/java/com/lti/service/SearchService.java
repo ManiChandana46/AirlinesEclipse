@@ -52,5 +52,17 @@ public class SearchService {
 		}
 		return null;
 	}
+	
+	public List<String> blockedSeats(int scheduleId)
+	{
+		if(searchRepository.isSchedulePresent(scheduleId))
+		{
+		return searchRepository.blockedSeats(scheduleId);
+		}
+		else
+		{
+			throw new AirlinesServiceException("Seat Table for this scheduleId is not created");
+		}
+	}
 
 }

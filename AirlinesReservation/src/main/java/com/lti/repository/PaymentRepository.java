@@ -55,6 +55,16 @@ public class PaymentRepository {
 		passengerDetail.setFlightBookingDetail(flightBookingDetail);
 		genericRepository.save(passengerDetail);
 	}
+	
+	public void addPassengerwithoutSeatTable(PassengerDto passengerDto,FlightBookingDetail flightBookingDetail) {
+		PassengerDetail passengerDetail=new PassengerDetail();
+		passengerDetail.setName(passengerDto.getName());
+		passengerDetail.setGender(passengerDto.getGender());
+		passengerDetail.setAge(passengerDto.getAge());
+		passengerDetail.setSeatDetail(null);
+		passengerDetail.setFlightBookingDetail(flightBookingDetail);
+		genericRepository.save(passengerDetail);
+	}
 
 	public FlightSchedule fetchFlightSchedule(int scheduleId) {
 		return genericRepository.fetchById(FlightSchedule.class, scheduleId);
@@ -70,5 +80,12 @@ public class PaymentRepository {
 					 .setParameter("si", id)
 					 .executeUpdate();
 		
+	}
+	
+	public boolean isSchedulePresent(int scheduleId) {
+		
+		return (Long) entityManager.createQuery("select count(s.flightSchedule.scheduleId) from SeatDetail s where s.flightSchedule.scheduleId= :sch ")
+								   .setParameter("sch", scheduleId)
+								   .getSingleResult() == 0 ? false : true;
 	}
 }

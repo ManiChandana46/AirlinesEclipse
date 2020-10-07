@@ -35,5 +35,19 @@ public class SearchRepository {
 											 .setParameter("date", searchDetails.returnTravelDate)
 											 .getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> blockedSeats(int scheduleId)
+	{
+		return entityManager.createQuery("select s.seatName from SeatDetail s where s.flightSchedule.scheduleId= :sch and s.status=true")
+					 		.setParameter("sch", scheduleId)
+					 		.getResultList();
+	}
+	public boolean isSchedulePresent(int scheduleId) {
+		
+		return (Long) entityManager.createQuery("select count(s.flightSchedule.scheduleId) from SeatDetail s where s.flightSchedule.scheduleId= :sch ")
+								   .setParameter("sch", scheduleId)
+								   .getSingleResult() == 0 ? false : true;
+	}
 
 }
