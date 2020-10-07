@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lti.dto.DeleteFlightStatusDto;
+import com.lti.entity.CustomerDetail;
 import com.lti.exception.AirlinesServiceException;
 import com.lti.repository.DeleteFlightRepository;
+import com.lti.repository.GenericRepository;
 
 @Service
 @Transactional
@@ -19,6 +21,12 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 
 	@Autowired
 	private DeleteFlightRepository deleteFlightRepository;
+	
+	@Autowired
+	private GenericRepository genericRepository;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Autowired
 	private DeleteFlightStatusDto deleteFlightStatusDto;
@@ -71,6 +79,13 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 
 				deleteFlightRepository.deleteSeatDetailByScheduleId(scheduleId);
 				deleteFlightRepository.deleteFlightScheduleByFlightIdAndTravelDate(flightId, travelDate);
+				
+				if(customerIdList != null) {
+					for(Integer i : customerIdList) {
+						CustomerDetail customer = genericRepository.fetchById(CustomerDetail.class, i);
+						emailService.sendEmailUponDeletion(flightNumber, travelDate, customer);
+					}
+				}
 			}
 			deleteFlightStatusDto.setStatus(true);
 			deleteFlightStatusDto.setMessage("Flight Deleted!");
