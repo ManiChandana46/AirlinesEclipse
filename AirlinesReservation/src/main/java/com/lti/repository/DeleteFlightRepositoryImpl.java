@@ -133,7 +133,7 @@ public class DeleteFlightRepositoryImpl implements DeleteFlightRepository {
 	@Override
 	public void deleteSeatDetailByScheduleId(int scheduleId) {
 		entityManager
-		.createQuery("delete from SeatDetail s where s.flightSchedule.schduleId= :scheduleId")
+		.createQuery("delete from SeatDetail s where s.flightSchedule.scheduleId= :scheduleId")
 		.setParameter("scheduleId", scheduleId)
 		.executeUpdate();
 	}

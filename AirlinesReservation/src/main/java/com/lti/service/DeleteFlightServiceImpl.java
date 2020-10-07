@@ -80,7 +80,7 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 				deleteFlightRepository.deleteSeatDetailByScheduleId(scheduleId);
 				deleteFlightRepository.deleteFlightScheduleByFlightIdAndTravelDate(flightId, travelDate);
 				
-				if(customerIdList != null) {
+				if(!customerIdList.isEmpty()) {
 					for(Integer i : customerIdList) {
 						CustomerDetail customer = genericRepository.fetchById(CustomerDetail.class, i);
 						emailService.sendEmailUponDeletion(flightNumber, travelDate, customer);
