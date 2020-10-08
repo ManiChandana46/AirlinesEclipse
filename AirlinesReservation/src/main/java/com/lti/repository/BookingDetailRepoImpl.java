@@ -12,21 +12,24 @@ import com.lti.entity.ReturnDetail;
 import com.lti.entity.FlightBookingDetail;
 
 @Repository
-public class BookingDetailRepo {
+public class BookingDetailRepoImpl implements BookingDetailsRepo {
 
 	@PersistenceContext
 	private EntityManager entityManager;
 	@Autowired
 	private GenericRepository genericRepository;
 
+	@Override
 	public FlightBookingDetail fetchBooking(int bookingId) {
 		return genericRepository.fetchById(FlightBookingDetail.class, bookingId);
 	}
 
+	@Override
 	public ReturnDetail fetchReturnDetails(int returnId) {
 		return genericRepository.fetchById(ReturnDetail.class, returnId);
 	}
 
+	@Override
 	public int isReturnAvailable(int bookingId) {
 		FlightBookingDetail flightBookingDetail = genericRepository.fetchById(FlightBookingDetail.class, bookingId);
 		if (flightBookingDetail.getReturnDetail() != null) {
@@ -38,6 +41,7 @@ public class BookingDetailRepo {
 		return 0;
 	}
 
+	@Override
 	public void deleteBooking(int bookingId) {
 		// FlightBookingDetail cancel =
 		// genericRepository.fetchById(FlightBookingDetail.class,bookingId);
@@ -51,6 +55,7 @@ public class BookingDetailRepo {
 				.setParameter("bookId", bookingId).executeUpdate();
 	}
 
+	@Override
 	public void deleteReturnBooking(int returnId) {
 		// ReturnDetail cancel =
 		// genericRepository.fetchById(ReturnDetail.class,returnId);
@@ -59,12 +64,14 @@ public class BookingDetailRepo {
 				.setParameter("returnId", returnId).executeUpdate();
 	}
 
+	@Override
 	public void cancelBooking(int returnId) {
 		entityManager.createQuery(
 				"update FlightBookingDetail b set b.returnDetail.returnId= null where b.returnDetail.returnId= :returnId")
 				.setParameter("returnId", returnId).executeUpdate();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Integer> fetchBookingId(int customerId) {
 		
@@ -73,6 +80,7 @@ public class BookingDetailRepo {
 					 .getResultList();
 	}
 	
+	@Override
 	public boolean isBookingAvailable(int customerId)
 	{
 		
