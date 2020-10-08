@@ -9,15 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lti.entity.CustomerDetail;
 
 @Repository
-public class RegisterRepo {
+public class RegisterRepositoryImpl implements RegisterRepository {
 	@Autowired
 	private EntityManager entityManager;
 	
+	@Override
 	@Transactional
 	public void addRegistration(CustomerDetail newRegister) {
 		entityManager.persist(newRegister);
 	}
 	
+	@Override
 	public boolean isCustomerPresent(String email) {
 		return (Long)
 				entityManager
