@@ -88,4 +88,15 @@ public class PaymentRepository {
 								   .setParameter("sch", scheduleId)
 								   .getSingleResult() == 0 ? false : true;
 	}
+	
+	public int isReturnPresent(int bookId) {
+		FlightBookingDetail flightBookingDetail = genericRepository.fetchById(FlightBookingDetail.class, bookId);
+		if(flightBookingDetail.getReturnDetail() != null) {
+			return (Integer) entityManager
+							 .createQuery("select fb.returnDetail.returnId from FlightBookingDetail fb where fb.bookId= :bookId")
+							 .setParameter("bookId", bookId)
+							 .getSingleResult();
+		}
+		return 0;
+	}
 }

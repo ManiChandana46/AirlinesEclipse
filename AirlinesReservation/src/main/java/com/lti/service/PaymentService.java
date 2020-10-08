@@ -31,6 +31,7 @@ public class PaymentService {
 
 		ReturnDetail returnDetail;
 		FlightBookingDetail flightBookingDetail;
+		int returnId = 0;
 
 		try {
 
@@ -58,6 +59,8 @@ public class PaymentService {
 				flightBookingDetail.setCustomerDetail(paymentRepository.fetchCustomer(paymentDto.getCustomerId()));
 
 				flightBookingDetail = paymentRepository.addFlightBookingDetails(flightBookingDetail);
+				
+				returnId = paymentRepository.isReturnPresent(flightBookingDetail.getBookId());
 
 			} else {
 
@@ -112,6 +115,7 @@ public class PaymentService {
 			paymentStatus.setStatusMessage("Payment Succesfull");
 			paymentStatus.setTransactionId(paymentDetail.getTransactionId());
 			paymentStatus.setBookingId(flightBookingDetail.getBookId());
+			paymentStatus.setReturnId(returnId);
 
 			return paymentStatus;
 

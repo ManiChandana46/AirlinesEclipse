@@ -36,6 +36,7 @@ public class PaymentController {
 			paymentStatus.setStatusMessage("Payment Failed");
 			paymentStatus.setTransactionId(0);
 			paymentStatus.setBookingId(0);
+			paymentStatus.setReturnId(0);
 
 			return paymentStatus;
 		}

@@ -7,6 +7,16 @@ public class PaymentStatus extends Status {
 
 	private int transactionId;
 	private int bookingId;
+	private int returnId;
+	
+
+	public int getReturnId() {
+		return returnId;
+	}
+
+	public void setReturnId(int returnId) {
+		this.returnId = returnId;
+	}
 
 	public int getTransactionId() {
 		return transactionId;
