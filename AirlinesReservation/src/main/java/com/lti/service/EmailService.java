@@ -1,6 +1,7 @@
 package com.lti.service;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
@@ -28,4 +29,22 @@ public class EmailService {
 		mailSender.send(message);
 
 	}
+	
+	public int sendOtp(String mail) {
+		
+		Random rand = new Random(); 
+		int x = rand.nextInt(1000); 
+		
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("do-not-reply@AirAviation.com");
+		message.setTo(mail);
+		message.setSubject("Flight Cancelled");
+		message.setText("Hi "+ "\n"+ "Your OTP to change Password is " + x);
+		mailSender.send(message);
+		
+		return x;
+	}
+	
+	
+	
 }

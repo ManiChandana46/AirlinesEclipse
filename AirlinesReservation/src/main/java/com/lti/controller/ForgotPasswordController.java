@@ -2,6 +2,7 @@ package com.lti.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lti.dto.ForgotPassword;
 import com.lti.dto.Status;
 import com.lti.exception.AirlinesServiceException;
+import com.lti.service.EmailService;
 import com.lti.service.ForgotPasswordService;
 
 @RestController
@@ -17,6 +19,9 @@ public class ForgotPasswordController {
 
 	@Autowired
 	private ForgotPasswordService forgotPasswordService;
+
+	@Autowired
+	private EmailService mailService;
 
 	@Autowired
 	private Status status;
@@ -35,6 +40,11 @@ public class ForgotPasswordController {
 			return status;
 		}
 
+	}
+
+	@GetMapping(path = "/sendOtp")
+	public int sendOtp(String mail) {
+		return mailService.sendOtp(mail);
 	}
 
 }
