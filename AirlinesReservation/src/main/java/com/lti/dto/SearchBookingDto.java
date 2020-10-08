@@ -16,24 +16,21 @@ public class SearchBookingDto {
 	private int returnNoOfSeats;
 	private String returnSeatSelected;
 	private String returnFlightClass;
-	//private LocalDateTime dateOfBooking;
+	// private LocalDateTime dateOfBooking;
 	private String to;
 	private String from;
 	private String startTime;
 	private String endTime;
 	private double price;
 	private LocalDate returnTravelDate;
-	//private LocalDateTime returndateOfBooking;
+	// private LocalDateTime returndateOfBooking;
 	private String returnTo;
 	private String returnFrom;
 	private String returnStartTime;
 	private String returnEndTime;
-	//private double returnPrice;
+	// private double returnPrice;
 	private int duration;
 	private int returnDuration;
-	
-	
-	
 
 	public int getReturnDuration() {
 		return returnDuration;
@@ -202,7 +199,5 @@ public class SearchBookingDto {
 	public void setReturnTravelDate(LocalDate returnTravelDate) {
 		this.returnTravelDate = returnTravelDate;
 	}
-
-	
 
 }

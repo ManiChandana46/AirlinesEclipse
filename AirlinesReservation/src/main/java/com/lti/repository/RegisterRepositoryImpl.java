@@ -12,21 +12,18 @@ import com.lti.entity.CustomerDetail;
 public class RegisterRepositoryImpl implements RegisterRepository {
 	@Autowired
 	private EntityManager entityManager;
-	
+
 	@Override
 	@Transactional
 	public void addRegistration(CustomerDetail newRegister) {
 		entityManager.persist(newRegister);
 	}
-	
+
 	@Override
 	public boolean isCustomerPresent(String email) {
-		return (Long)
-				entityManager
+		return (Long) entityManager
 				.createQuery("select count(c.customerId) from CustomerDetail c where c.customerEmail= :em")
-				.setParameter("em", email)
-				.getSingleResult()==1 ? true:false;
+				.setParameter("em", email).getSingleResult() == 1 ? true : false;
 	}
-
 
 }

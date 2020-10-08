@@ -16,7 +16,7 @@ public class ViewFlightController {
 
 	@Autowired
 	private ViewFlightService viewFlightService;
-	
+
 	@PutMapping(path = "/viewFlight")
 	public List<ViewFlightDto> viewFlight() {
 		return viewFlightService.getView();

@@ -6,23 +6,23 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class GenericRepository  {
+public class GenericRepository {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	@Transactional
 	public <T> T save(Object obj) {
 		@SuppressWarnings("unchecked")
-		T updatedObj=(T) entityManager.merge(obj);
+		T updatedObj = (T) entityManager.merge(obj);
 		return updatedObj;
 	}
-	
+
 	@Transactional
-	public <T> T fetchById(Class<T> clazz,Object id){
+	public <T> T fetchById(Class<T> clazz, Object id) {
 		T obj = null;
-		obj=entityManager.find(clazz, id); 
+		obj = entityManager.find(clazz, id);
 		return obj;
 	}
-	
+
 }

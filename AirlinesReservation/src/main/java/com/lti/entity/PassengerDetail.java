@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "Passenger_data")
 public class PassengerDetail {
@@ -33,9 +32,9 @@ public class PassengerDetail {
 	@ManyToOne
 	@JoinColumn(name = "flight_book_id")
 	private FlightBookingDetail flightBookingDetail;
-	
+
 	@OneToOne
-	@JoinColumn(name="seat_id")
+	@JoinColumn(name = "seat_id")
 	private SeatDetail seatDetail;
 
 	public int getPassengerId() {
@@ -89,9 +88,5 @@ public class PassengerDetail {
 	public void setSeatDetail(SeatDetail seatDetail) {
 		this.seatDetail = seatDetail;
 	}
-
-	
-	
-	
 
 }

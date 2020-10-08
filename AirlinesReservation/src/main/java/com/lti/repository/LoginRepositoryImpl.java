@@ -20,10 +20,11 @@ public class LoginRepositoryImpl implements LoginRepository {
 
 	@Override
 	public int findByEmailAndPassword(String email, String password) {
-		return (Integer) entityManager.createQuery("select c.customerId from CustomerDetail c where c.customerEmail =:em and c.customerPassword =:pw")
+		return (Integer) entityManager.createQuery(
+				"select c.customerId from CustomerDetail c where c.customerEmail =:em and c.customerPassword =:pw")
 				.setParameter("em", email).setParameter("pw", password).getSingleResult();
 	}
-	
+
 	@Override
 	public int findByEmail(String email) {
 		return (Integer) entityManager
@@ -33,7 +34,8 @@ public class LoginRepositoryImpl implements LoginRepository {
 
 	@Override
 	public boolean isCustomerPresent(String email) {
-		return (Long) entityManager.createQuery("select count(c.customerId) from CustomerDetail c where c.customerEmail = :em")
+		return (Long) entityManager
+				.createQuery("select count(c.customerId) from CustomerDetail c where c.customerEmail = :em")
 				.setParameter("em", email).getSingleResult() == 1 ? true : false;
 	}
 

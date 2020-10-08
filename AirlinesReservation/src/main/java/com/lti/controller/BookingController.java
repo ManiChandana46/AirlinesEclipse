@@ -41,7 +41,7 @@ public class BookingController {
 			return status;
 		}
 	}
-	
+
 	@PostMapping(path = "/cancelreturnbooking")
 	public Status cancelReturnBooking(@RequestBody BookedTicketSearch bookedTicketSearch) {
 		try {
@@ -55,17 +55,15 @@ public class BookingController {
 			return status;
 		}
 	}
-	
+
 	@GetMapping(path = "/displayBookingDetails")
 	public List<SearchBookingDto> displayBooking(int customerId) {
 		try {
 			return service.displayBooking(customerId);
-		}catch(Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
 	}
-	
-	
+
 }

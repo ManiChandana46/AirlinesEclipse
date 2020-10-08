@@ -21,17 +21,17 @@ public class FlightRoute {
 	@SequenceGenerator(name = "myseq", sequenceName = "flightRoute_sequence", allocationSize = 1, initialValue = 1)
 	@Column(name = "Flight_route_id")
 	private int routeId;
-	
+
 	@Column(name = "Flight_city_from")
 	private String cityFrom;
-	
+
 	@Column(name = "Flight_city_to")
 	private String cityTo;
-	
+
 	@Column(name = "Flight_duration")
 	private int duration;
-	
-	@OneToMany(mappedBy = "flightRoute" , cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "flightRoute", cascade = CascadeType.ALL)
 	private List<FlightSchedule> flightSchedules;
 
 	public int getRouteId() {
@@ -74,5 +74,4 @@ public class FlightRoute {
 		this.flightSchedules = flightSchedules;
 	}
 
-	
 }

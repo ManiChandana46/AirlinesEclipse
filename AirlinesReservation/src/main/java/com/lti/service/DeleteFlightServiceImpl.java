@@ -18,13 +18,12 @@ import com.lti.repository.GenericRepository;
 @Transactional
 public class DeleteFlightServiceImpl implements DeleteFlightService {
 
-
 	@Autowired
 	private DeleteFlightRepository deleteFlightRepository;
-	
+
 	@Autowired
 	private GenericRepository genericRepository;
-	
+
 	@Autowired
 	private EmailService emailService;
 
@@ -37,15 +36,15 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 			int flightId = deleteFlightRepository.flightIdByFlightNumber(flightNumber);
 			int scheduleId = deleteFlightRepository.scheduleIdByFlightIdAndTravelDate(flightId, travelDate);
 
-			if(scheduleId != 0) {
+			if (scheduleId != 0) {
 				List<Integer> flightBookIdList = deleteFlightRepository.listOfBookIdByScheduleId(scheduleId);
 				List<Integer> returnIdList = deleteFlightRepository.listOfReturnIdByScheduleId(scheduleId);
 
-				List<Integer> customerIdList =  new ArrayList<>();
+				List<Integer> customerIdList = new ArrayList<>();
 
-				if(!returnIdList.isEmpty()) {
+				if (!returnIdList.isEmpty()) {
 
-					for(int returnId : returnIdList) {
+					for (int returnId : returnIdList) {
 						int bookId = deleteFlightRepository.bookIdByReturnId(returnId);
 						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
 						deleteFlightRepository.refereneceDeletionOfReturnIdFromBookTable(returnId);
@@ -53,15 +52,14 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 					}
 				}
 
-				if(flightBookIdList != null) {
+				if (flightBookIdList != null) {
 
-					for(int bookId : flightBookIdList) {
+					for (int bookId : flightBookIdList) {
 						customerIdList.add(deleteFlightRepository.customerIdByBookId(bookId));
 
-						int returnId=deleteFlightRepository.isReturnPresent(bookId);
+						int returnId = deleteFlightRepository.isReturnPresent(bookId);
 
-
-						if(returnId != 0) {
+						if (returnId != 0) {
 							deleteFlightRepository.refereneceDeletionOfReturnIdFromBookTable(returnId);
 							deleteFlightRepository.deleteReturnDetailByReturnId(returnId);
 							deleteFlightRepository.deletePassengerByBookId(bookId);
@@ -79,9 +77,9 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 
 				deleteFlightRepository.deleteSeatDetailByScheduleId(scheduleId);
 				deleteFlightRepository.deleteFlightScheduleByFlightIdAndTravelDate(flightId, travelDate);
-				
-				if(!customerIdList.isEmpty()) {
-					for(Integer i : customerIdList) {
+
+				if (!customerIdList.isEmpty()) {
+					for (Integer i : customerIdList) {
 						CustomerDetail customer = genericRepository.fetchById(CustomerDetail.class, i);
 						emailService.sendEmailUponDeletion(flightNumber, travelDate, customer);
 					}
@@ -89,8 +87,7 @@ public class DeleteFlightServiceImpl implements DeleteFlightService {
 			}
 			deleteFlightStatusDto.setStatus(true);
 			deleteFlightStatusDto.setMessage("Flight Deleted!");
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw new AirlinesServiceException("Delete Flight failed!", e);
 		}
 

@@ -20,7 +20,7 @@ public class PaymentRepository {
 
 	@Autowired
 	private GenericRepository genericRepository;
-	
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -42,12 +42,11 @@ public class PaymentRepository {
 
 	}
 
-	public void addPassenger(PassengerDto passengerDto,int id,FlightBookingDetail flightBookingDetail) {
-		SeatDetail seatDetail=(SeatDetail) entityManager.createQuery("select s from SeatDetail s where s.flightSchedule.scheduleId= :s and s.seatName= :sn")
-					 .setParameter("sn", passengerDto.getSeatAlloted())
-					 .setParameter("s", id)
-					 .getSingleResult();
-		PassengerDetail passengerDetail=new PassengerDetail();
+	public void addPassenger(PassengerDto passengerDto, int id, FlightBookingDetail flightBookingDetail) {
+		SeatDetail seatDetail = (SeatDetail) entityManager
+				.createQuery("select s from SeatDetail s where s.flightSchedule.scheduleId= :s and s.seatName= :sn")
+				.setParameter("sn", passengerDto.getSeatAlloted()).setParameter("s", id).getSingleResult();
+		PassengerDetail passengerDetail = new PassengerDetail();
 		passengerDetail.setName(passengerDto.getName());
 		passengerDetail.setGender(passengerDto.getGender());
 		passengerDetail.setAge(passengerDto.getAge());
@@ -55,9 +54,9 @@ public class PaymentRepository {
 		passengerDetail.setFlightBookingDetail(flightBookingDetail);
 		genericRepository.save(passengerDetail);
 	}
-	
-	public void addPassengerwithoutSeatTable(PassengerDto passengerDto,FlightBookingDetail flightBookingDetail) {
-		PassengerDetail passengerDetail=new PassengerDetail();
+
+	public void addPassengerwithoutSeatTable(PassengerDto passengerDto, FlightBookingDetail flightBookingDetail) {
+		PassengerDetail passengerDetail = new PassengerDetail();
 		passengerDetail.setName(passengerDto.getName());
 		passengerDetail.setGender(passengerDto.getGender());
 		passengerDetail.setAge(passengerDto.getAge());
@@ -74,28 +73,26 @@ public class PaymentRepository {
 		return genericRepository.fetchById(CustomerDetail.class, customerId);
 	}
 
-	public void seatEntry(String s,int id){
-		entityManager.createQuery("update SeatDetail s set s.status=true where s.flightSchedule.scheduleId= :si and s.seatName= :sn")
-					 .setParameter("sn", s)
-					 .setParameter("si", id)
-					 .executeUpdate();
-		
+	public void seatEntry(String s, int id) {
+		entityManager.createQuery(
+				"update SeatDetail s set s.status=true where s.flightSchedule.scheduleId= :si and s.seatName= :sn")
+				.setParameter("sn", s).setParameter("si", id).executeUpdate();
+
 	}
-	
+
 	public boolean isSchedulePresent(int scheduleId) {
-		
-		return (Long) entityManager.createQuery("select count(s.flightSchedule.scheduleId) from SeatDetail s where s.flightSchedule.scheduleId= :sch ")
-								   .setParameter("sch", scheduleId)
-								   .getSingleResult() == 0 ? false : true;
+
+		return (Long) entityManager.createQuery(
+				"select count(s.flightSchedule.scheduleId) from SeatDetail s where s.flightSchedule.scheduleId= :sch ")
+				.setParameter("sch", scheduleId).getSingleResult() == 0 ? false : true;
 	}
-	
+
 	public int isReturnPresent(int bookId) {
 		FlightBookingDetail flightBookingDetail = genericRepository.fetchById(FlightBookingDetail.class, bookId);
-		if(flightBookingDetail.getReturnDetail() != null) {
+		if (flightBookingDetail.getReturnDetail() != null) {
 			return (Integer) entityManager
-							 .createQuery("select fb.returnDetail.returnId from FlightBookingDetail fb where fb.bookId= :bookId")
-							 .setParameter("bookId", bookId)
-							 .getSingleResult();
+					.createQuery("select fb.returnDetail.returnId from FlightBookingDetail fb where fb.bookId= :bookId")
+					.setParameter("bookId", bookId).getSingleResult();
 		}
 		return 0;
 	}

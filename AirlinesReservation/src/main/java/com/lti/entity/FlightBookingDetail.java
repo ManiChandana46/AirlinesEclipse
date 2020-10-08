@@ -16,42 +16,42 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Flight_Book_Details")
+@Table(name = "Flight_Book_Details")
 public class FlightBookingDetail {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
 	@SequenceGenerator(name = "myseq", sequenceName = "booking_seq", allocationSize = 1, initialValue = 600)
-	@Column(name="Flight_book_Id")
+	@Column(name = "Flight_book_Id")
 	private int bookId;
-	
-	@Column(name="Flight_no_of_seats")
+
+	@Column(name = "Flight_no_of_seats")
 	private int noOfSeats;
-	
-	@Column(name="Flight_seats_selected")
+
+	@Column(name = "Flight_seats_selected")
 	private String seatSelected;
-	
-	@Column(name="Flight_class")
+
+	@Column(name = "Flight_class")
 	private String flightClass;
-	
-	@Column(name="Travel_date")
+
+	@Column(name = "Travel_date")
 	private LocalDate travelDate;
-	
+
 	@OneToOne
-	@JoinColumn(name="Return_Id")
+	@JoinColumn(name = "Return_Id")
 	private ReturnDetail returnDetail;
-	
+
 	@OneToMany(mappedBy = "flightBookingDetail")
 	private List<PassengerDetail> passengerDetails;
-	
+
 	@ManyToOne
-	@JoinColumn(name="Customer_Id")
+	@JoinColumn(name = "Customer_Id")
 	private CustomerDetail customerDetail;
-	
+
 	@ManyToOne
-	@JoinColumn(name="Schedule_Id")
+	@JoinColumn(name = "Schedule_Id")
 	private FlightSchedule flightSchedule;
-	
+
 	@OneToOne(mappedBy = "flightBookingDetail")
 	private PaymentDetail paymentDetail;
 
@@ -95,7 +95,6 @@ public class FlightBookingDetail {
 		this.travelDate = travelDate;
 	}
 
-
 	public ReturnDetail getReturnDetail() {
 		return returnDetail;
 	}
@@ -135,7 +134,5 @@ public class FlightBookingDetail {
 	public void setPaymentDetail(PaymentDetail paymentDetail) {
 		this.paymentDetail = paymentDetail;
 	}
-	
-	
 
 }

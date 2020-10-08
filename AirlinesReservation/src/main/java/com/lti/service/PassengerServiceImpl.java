@@ -19,8 +19,8 @@ public class PassengerServiceImpl implements PassengerService {
 	@Override
 	@Transactional
 	public void addPassengers(List<PassengerDetail> passengers) {
-		
-		for(PassengerDetail passenger: passengers)
+
+		for (PassengerDetail passenger : passengers)
 			genericRepository.save(passenger);
 
 	}

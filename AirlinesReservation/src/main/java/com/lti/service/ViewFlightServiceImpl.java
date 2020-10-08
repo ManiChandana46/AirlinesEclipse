@@ -21,10 +21,10 @@ public class ViewFlightServiceImpl implements ViewFlightService {
 	@Override
 	public List<ViewFlightDto> getView() {
 		try {
-			List<ViewFlightDto> viewList = new ArrayList<>(); 
+			List<ViewFlightDto> viewList = new ArrayList<>();
 			List<Integer> flightNumberList = viewFlightRepository.listOfFlightNumber();
 
-			for(Integer i : flightNumberList) {
+			for (Integer i : flightNumberList) {
 
 				ViewFlightDto viewFlightDto = new ViewFlightDto();
 				viewFlightDto.setFlightNumber(i);
@@ -49,9 +49,8 @@ public class ViewFlightServiceImpl implements ViewFlightService {
 			}
 
 			return viewList;
+		} catch (Exception e) {
+			throw new AirlinesServiceException("Cannot display view", e);
 		}
-		catch(Exception e) {
-			throw new AirlinesServiceException("Cannot display view",e);
-		}
-	}	
+	}
 }

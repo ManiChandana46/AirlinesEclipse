@@ -11,25 +11,25 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="seat_status")
+@Table(name = "seat_status")
 public class SeatDetail {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
 	@SequenceGenerator(name = "myseq", sequenceName = "seat_seq", allocationSize = 1, initialValue = 3000)
 	private int seatId;
-	
+
 	@ManyToOne
-	@JoinColumn(name="Schedule_Id")
+	@JoinColumn(name = "Schedule_Id")
 	private FlightSchedule flightSchedule;
-	
+
 	private String seatName;
-	
+
 	private boolean status;
-	
+
 	@OneToOne(mappedBy = "seatDetail")
 	private PassengerDetail passengerDetail;
-	
+
 	public int getSeatId() {
 		return seatId;
 	}
@@ -69,8 +69,5 @@ public class SeatDetail {
 	public void setPassengerDetail(PassengerDetail passengerDetail) {
 		this.passengerDetail = passengerDetail;
 	}
-	
-	
-	
 
 }

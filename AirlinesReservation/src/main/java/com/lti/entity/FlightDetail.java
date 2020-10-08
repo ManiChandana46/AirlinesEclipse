@@ -16,26 +16,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Flights_details")
 public class FlightDetail {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
 	@SequenceGenerator(name = "myseq", sequenceName = "flight_seq", allocationSize = 1, initialValue = 300)
 	@Column(name = "Flight_id")
 	private int flightId;
-	
+
 	@Column(name = "Flight_number")
 	private int flightNumber;
-	
+
 	@Column(name = "Flight_cabin")
 	private int cabin;
-	
-	@Column(name="initial_date")
+
+	@Column(name = "initial_date")
 	private LocalDate initialDate;
-	
-	@Column(name="final_date")
+
+	@Column(name = "final_date")
 	private LocalDate finalDate;
-	
-	@OneToMany(mappedBy = "flightDetail" , cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "flightDetail", cascade = CascadeType.ALL)
 	private List<FlightSchedule> flightSchedules;
 
 	public int getFlightId() {
@@ -85,8 +85,5 @@ public class FlightDetail {
 	public void setFinalDate(LocalDate finalDate) {
 		this.finalDate = finalDate;
 	}
-	
-	
 
-	
 }

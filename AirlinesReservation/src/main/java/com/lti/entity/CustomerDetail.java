@@ -17,7 +17,6 @@ import javax.persistence.Table;
 @Table(name = "Customer_Data")
 public class CustomerDetail {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
 	@SequenceGenerator(name = "myseq", sequenceName = "customer_sequence", allocationSize = 10, initialValue = 100)
@@ -26,19 +25,19 @@ public class CustomerDetail {
 
 	@Column(name = "Customer_firstname")
 	private String customerFirstName;
-	
+
 	@Column(name = "Customer_lastname")
 	private String customerLastName;
-	
+
 	@Column(name = "Customer_email")
 	private String customerEmail;
-	
+
 	@Column(name = "Customer_password")
 	private String customerPassword;
-	
+
 	@Column(name = "Customer_dateOfBirth")
 	private LocalDate customerDateOfBirth;
-	
+
 	@Column(name = "Customer_phoneNo")
 	private String customerPhoneNo;
 

@@ -18,43 +18,43 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Flight_Schedule_Details")
 public class FlightSchedule {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
 	@SequenceGenerator(name = "myseq", sequenceName = "schedule_sequence", allocationSize = 1, initialValue = 2000)
 	@Column(name = "Schedule_id")
 	private int scheduleId;
-	
+
 	@Column(name = "Flight_departure_time")
 	private String departureTime;
-	
+
 	@Column(name = "Flight_arrival_time")
 	private String arrivalTime;
-	
-	@Column(name  = "Flight_seat_available")
+
+	@Column(name = "Flight_seat_available")
 	private int seatAvailable;
-	
-	@Column( name = "date_of_travel")
+
+	@Column(name = "date_of_travel")
 	private LocalDate dateOfTravel;
-	
+
 	@Column(name = "Flight_price")
 	private double price;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Flight_route_id")
 	private FlightRoute flightRoute;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Flight_id")
 	private FlightDetail flightDetail;
-	
-	@OneToMany(mappedBy = "flightSchedule" , cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "flightSchedule", cascade = CascadeType.ALL)
 	private List<ReturnDetail> returnDetails;
-	
-	@OneToMany(mappedBy = "flightSchedule" , cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "flightSchedule", cascade = CascadeType.ALL)
 	private List<FlightBookingDetail> flightBookingDetails;
-	
-	@OneToMany(mappedBy ="flightSchedule")
+
+	@OneToMany(mappedBy = "flightSchedule")
 	private List<SeatDetail> seatDetails;
 
 	public int getScheduleId() {
@@ -64,7 +64,6 @@ public class FlightSchedule {
 	public void setScheduleId(int scheduleId) {
 		this.scheduleId = scheduleId;
 	}
-
 
 	public String getDepartureTime() {
 		return departureTime;
@@ -90,7 +89,6 @@ public class FlightSchedule {
 		this.seatAvailable = seatAvailable;
 	}
 
-	
 	public LocalDate getDateOfTravel() {
 		return dateOfTravel;
 	}
@@ -147,7 +145,4 @@ public class FlightSchedule {
 		this.flightBookingDetails = flightBookingDetails;
 	}
 
-	
-	
-	
 }

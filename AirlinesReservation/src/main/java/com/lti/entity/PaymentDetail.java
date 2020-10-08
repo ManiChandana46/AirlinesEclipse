@@ -13,30 +13,30 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Payment_Details")
+@Table(name = "Payment_Details")
 public class PaymentDetail {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
 	@SequenceGenerator(name = "myseq", sequenceName = "payment_seq", allocationSize = 1, initialValue = 700)
 
-	@Column(name="Transaction_Id")
+	@Column(name = "Transaction_Id")
 	private int transactionId;
-	
-	@Column(name="Transaction_amount")
+
+	@Column(name = "Transaction_amount")
 	private double transactionAmount;
-	
-	@Column(name="Transaction_time")
+
+	@Column(name = "Transaction_time")
 	private LocalDateTime transactionTime;
-	
-	@Column(name="Payment_type")
+
+	@Column(name = "Payment_type")
 	private String paymentType;
-	
-	@Column(name="Payment_card_number")
+
+	@Column(name = "Payment_card_number")
 	private String cardNumber;
-	
+
 	@OneToOne
-	@JoinColumn(name="Flight_book_Id")
+	@JoinColumn(name = "Flight_book_Id")
 	private FlightBookingDetail flightBookingDetail;
 
 	public int getTransactionId() {
@@ -86,7 +86,5 @@ public class PaymentDetail {
 	public void setFlightBookingDetail(FlightBookingDetail flightBookingDetail) {
 		this.flightBookingDetail = flightBookingDetail;
 	}
-	
-	
 
 }

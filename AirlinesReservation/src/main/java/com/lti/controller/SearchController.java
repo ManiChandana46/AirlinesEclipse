@@ -1,6 +1,5 @@
 package com.lti.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,28 +20,24 @@ public class SearchController {
 
 	@Autowired
 	private SearchService searchService;
-	
+
 	@PostMapping("/search")
-	public TotalResult searchFlight(@RequestBody SearchDetails searchDetails)
-	{
-		try{
-			TotalResult totalResult=searchService.searchFlight(searchDetails);
-			return totalResult;	
-		}
-		catch (AirlinesServiceException airlines) {
-			TotalResult totalResult=new TotalResult();
+	public TotalResult searchFlight(@RequestBody SearchDetails searchDetails) {
+		try {
+			TotalResult totalResult = searchService.searchFlight(searchDetails);
+			return totalResult;
+		} catch (AirlinesServiceException airlines) {
+			TotalResult totalResult = new TotalResult();
 			totalResult.setStatusMessage(airlines.getMessage());
 			return totalResult;
 		}
 	}
-	
+
 	@GetMapping("/blockedSeats")
-	public List<String> blockedSeats(int scheduleId)
-	{
-		try{
+	public List<String> blockedSeats(int scheduleId) {
+		try {
 			return searchService.blockedSeats(scheduleId);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
 		}

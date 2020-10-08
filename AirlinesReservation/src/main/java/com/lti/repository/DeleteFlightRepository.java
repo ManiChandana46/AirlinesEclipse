@@ -10,17 +10,17 @@ public interface DeleteFlightRepository {
 	int scheduleIdByFlightIdAndTravelDate(int flightId, LocalDate travelDate);
 
 	List<Integer> listOfBookIdByScheduleId(int scheduleId);
-	
+
 	List<Integer> listOfReturnIdByScheduleId(int scheduleId);
-	
+
 	void refereneceDeletionOfReturnIdFromBookTable(int returnId);
 
 	int customerIdByBookId(int bookId);
-	
+
 	int bookIdByReturnId(int returnId);
 
 	int isReturnPresent(int bookId);
-	
+
 	void deleteSeatDetailByScheduleId(int scheduleId);
 
 	void deleteReturnDetailByReturnId(int returnId);

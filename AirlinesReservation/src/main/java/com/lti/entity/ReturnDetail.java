@@ -1,6 +1,5 @@
 package com.lti.entity;
 
-
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -15,33 +14,32 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Return_data")
+@Table(name = "Return_data")
 public class ReturnDetail {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "myseq")
 	@SequenceGenerator(name = "myseq", sequenceName = "return_sequence", allocationSize = 1, initialValue = 500)
-	@Column(name="Return_Id")
+	@Column(name = "Return_Id")
 	private int returnId;
-	
-	@Column(name="Flight_no_of_seats")
+
+	@Column(name = "Flight_no_of_seats")
 	private int noOfSeats;
-	
-	@Column(name="Flight_seats_selected")
+
+	@Column(name = "Flight_seats_selected")
 	private String seatSelected;
-	
-	@Column(name="Return_class")
+
+	@Column(name = "Return_class")
 	private String returnClass;
-	
-	@Column(name="Return_Travel_date")
+
+	@Column(name = "Return_Travel_date")
 	private LocalDate returnTravelDate;
-	
-	
+
 	@ManyToOne
-	@JoinColumn(name="Schedule_Id")
+	@JoinColumn(name = "Schedule_Id")
 	private FlightSchedule flightSchedule;
-	
-	@OneToOne(mappedBy = "returnDetail" )
+
+	@OneToOne(mappedBy = "returnDetail")
 	private FlightBookingDetail flightBookingdetail;
 
 	public int getReturnId() {
@@ -99,9 +97,5 @@ public class ReturnDetail {
 	public void setFlightBookingdetail(FlightBookingDetail flightBookingdetail) {
 		this.flightBookingdetail = flightBookingdetail;
 	}
-
-	
-	
-	
 
 }

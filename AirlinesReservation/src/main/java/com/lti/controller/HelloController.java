@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloController {
-	
+
 	@RequestMapping("/hello.api")
-	public String sayHello(@RequestParam("name") String name)
-	{
-		return "Hello"+name+". Welcome to Spring Boot";
+	public String sayHello(@RequestParam("name") String name) {
+		return "Hello" + name + ". Welcome to Spring Boot";
 	}
 
 }

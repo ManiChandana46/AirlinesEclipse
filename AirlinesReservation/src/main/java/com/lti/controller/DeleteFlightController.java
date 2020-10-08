@@ -23,14 +23,13 @@ public class DeleteFlightController {
 	@Autowired
 	private DeleteFlightStatusDto deleteFlightStatusDto;
 
-	@PostMapping( path = "/flightDelete")
-	public DeleteFlightStatusDto deleteFlight( @RequestBody DeleteFlightDto deleteFlightDto) {
+	@PostMapping(path = "/flightDelete")
+	public DeleteFlightStatusDto deleteFlight(@RequestBody DeleteFlightDto deleteFlightDto) {
 		try {
-			int flightNumber =  deleteFlightDto.getFlightNumber();
+			int flightNumber = deleteFlightDto.getFlightNumber();
 			LocalDate travelDate = deleteFlightDto.getTravelDate();
 			return deleteFlightService.deleteFlight(flightNumber, travelDate);
-		}
-		catch(AirlinesServiceException e) {
+		} catch (AirlinesServiceException e) {
 			deleteFlightStatusDto.setStatus(false);
 			deleteFlightStatusDto.setMessage("Flight Deletion Failed!");
 			return deleteFlightStatusDto;

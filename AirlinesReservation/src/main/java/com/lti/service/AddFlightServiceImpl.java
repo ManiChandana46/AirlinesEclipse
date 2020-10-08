@@ -38,26 +38,26 @@ public class AddFlightServiceImpl implements AddFlightService {
 			flightDetail.setFinalDate(addFlightDto.getFinalDate());
 			return genericRepository.save(flightDetail);
 
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw new AirlinesServiceException("Flight details not added", e);
 		}
 	}
 
 	@Override
 	public FlightRoute getRouteId(AddFlightDto addFlightDto) {
-		int routeId=addFlightRepository.findRouteId(addFlightDto.getCityFrom(), addFlightDto.getCityTo());
-		return genericRepository.fetchById(FlightRoute.class,routeId);
+		int routeId = addFlightRepository.findRouteId(addFlightDto.getCityFrom(), addFlightDto.getCityTo());
+		return genericRepository.fetchById(FlightRoute.class, routeId);
 	}
 
 	@Override
-	public AddFlightStatus addToSchedule(FlightDetail flightDetail, FlightRoute flightRoute, AddFlightDto addFlightDto) {
+	public AddFlightStatus addToSchedule(FlightDetail flightDetail, FlightRoute flightRoute,
+			AddFlightDto addFlightDto) {
 
-		int operationalDays=(int) ChronoUnit.DAYS.between(addFlightDto.getInitialDate(), addFlightDto.getFinalDate());
+		int operationalDays = (int) ChronoUnit.DAYS.between(addFlightDto.getInitialDate(), addFlightDto.getFinalDate());
 		LocalDate travelDate = addFlightDto.getInitialDate();
 
 		try {
-			for(int i=0;i<operationalDays;i++) {
+			for (int i = 0; i < operationalDays; i++) {
 
 				FlightSchedule flightSchedule = new FlightSchedule();
 				flightSchedule.setArrivalTime(addFlightDto.getArrivalTime());
@@ -67,19 +67,18 @@ public class AddFlightServiceImpl implements AddFlightService {
 				flightSchedule.setFlightRoute(flightRoute);
 				flightSchedule.setDateOfTravel(travelDate);
 
-				if(travelDate.getDayOfWeek().getValue()==6 || travelDate.getDayOfWeek().getValue()==7) {
-					double updatePrice=addFlightDto.getPrice()+(0.1*addFlightDto.getPrice());
+				if (travelDate.getDayOfWeek().getValue() == 6 || travelDate.getDayOfWeek().getValue() == 7) {
+					double updatePrice = addFlightDto.getPrice() + (0.1 * addFlightDto.getPrice());
 					flightSchedule.setPrice(updatePrice);
-				}
-				else
+				} else
 					flightSchedule.setPrice(addFlightDto.getPrice());
 
-				flightSchedule=genericRepository.save(flightSchedule);
-				for(int j=1;j<=10;j++) {
-					for(char a='A';a<='F';a++) {
-						SeatDetail seatDetail=new SeatDetail();
+				flightSchedule = genericRepository.save(flightSchedule);
+				for (int j = 1; j <= 10; j++) {
+					for (char a = 'A'; a <= 'F'; a++) {
+						SeatDetail seatDetail = new SeatDetail();
 						seatDetail.setFlightSchedule(flightSchedule);
-						seatDetail.setSeatName(j+""+a);
+						seatDetail.setSeatName(j + "" + a);
 						seatDetail.setStatus(false);
 						genericRepository.save(seatDetail);
 
@@ -91,8 +90,7 @@ public class AddFlightServiceImpl implements AddFlightService {
 
 			addFlightStatus.setStatus(true);
 			addFlightStatus.setMessage("Flight Added");
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			addFlightStatus.setStatus(false);
 			addFlightStatus.setMessage("Could not add flight");
 			throw new AirlinesServiceException("Could not add flight", e);

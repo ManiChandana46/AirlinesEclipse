@@ -74,17 +74,17 @@ public class BookingDetailRepoImpl implements BookingDetailsRepo {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Integer> fetchBookingId(int customerId) {
-		
-		return entityManager.createQuery("select b.bookId from FlightBookingDetail b where b.customerDetail.customerId= :c")
-					 .setParameter("c", customerId)
-					 .getResultList();
+
+		return entityManager
+				.createQuery("select b.bookId from FlightBookingDetail b where b.customerDetail.customerId= :c")
+				.setParameter("c", customerId).getResultList();
 	}
-	
+
 	@Override
-	public boolean isBookingAvailable(int customerId)
-	{
-		
-		return (Long) entityManager.createQuery("select count(b.bookId) from FlightBookingDetail b where b.customerDetail.customerId= :c")
+	public boolean isBookingAvailable(int customerId) {
+
+		return (Long) entityManager
+				.createQuery("select count(b.bookId) from FlightBookingDetail b where b.customerDetail.customerId= :c")
 				.setParameter("c", customerId).getSingleResult() == 0 ? false : true;
 	}
 

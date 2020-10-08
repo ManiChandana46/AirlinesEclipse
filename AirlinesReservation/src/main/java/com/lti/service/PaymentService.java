@@ -59,7 +59,7 @@ public class PaymentService {
 				flightBookingDetail.setCustomerDetail(paymentRepository.fetchCustomer(paymentDto.getCustomerId()));
 
 				flightBookingDetail = paymentRepository.addFlightBookingDetails(flightBookingDetail);
-				
+
 				returnId = paymentRepository.isReturnPresent(flightBookingDetail.getBookId());
 
 			} else {
@@ -89,27 +89,24 @@ public class PaymentService {
 			paymentDetail = paymentRepository.addPayment(paymentDetail);
 
 			List<PassengerDto> passengers = paymentDto.getPassengerDetails();
-			
-			if(paymentRepository.isSchedulePresent(paymentDto.getScheduleId()))
-			{
 
-			for (PassengerDto passenger : passengers) {
-				//passenger.setFlightBookingDetails(flightBookingDetail);
-				paymentRepository.addPassenger(passenger,paymentDto.getScheduleId(),flightBookingDetail);
-			}
-			
-			String seats=paymentDto.getSeatSelected();
-			String seatNames[]=seats.split(",");
-			for(String s:seatNames)
-				paymentRepository.seatEntry(s,paymentDto.getScheduleId());
-			}
-			else {
+			if (paymentRepository.isSchedulePresent(paymentDto.getScheduleId())) {
+
+				for (PassengerDto passenger : passengers) {
+					// passenger.setFlightBookingDetails(flightBookingDetail);
+					paymentRepository.addPassenger(passenger, paymentDto.getScheduleId(), flightBookingDetail);
+				}
+
+				String seats = paymentDto.getSeatSelected();
+				String seatNames[] = seats.split(",");
+				for (String s : seatNames)
+					paymentRepository.seatEntry(s, paymentDto.getScheduleId());
+			} else {
 				for (PassengerDto passenger : passengers) {
 					paymentRepository.addPassengerwithoutSeatTable(passenger, flightBookingDetail);
 				}
-				
+
 			}
-				
 
 			paymentStatus.setStatus(true);
 			paymentStatus.setStatusMessage("Payment Succesfull");

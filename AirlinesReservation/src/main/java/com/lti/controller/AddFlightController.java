@@ -18,7 +18,7 @@ public class AddFlightController {
 
 	@Autowired
 	private AddFlightService addFlightService;
-	
+
 	@PostMapping(path = "/addFlight")
 	public AddFlightStatus addFlight(@RequestBody AddFlightDto addFlightDto) {
 		FlightDetail flightDetail = addFlightService.addFlightDetails(addFlightDto);
