@@ -142,10 +142,8 @@ public class BookingDetailServiceImpl implements BookingDetailService {
 					searchBookingDto.setPrice(flightBookingDetail.getPaymentDetail().getTransactionAmount());
 
 					int returnId = bookingDetailRepo.isReturnAvailable(id);
-					System.out.println(returnId);
 					if (returnId != 0) {
 						ReturnDetail returnDetail = bookingDetailRepo.fetchReturnDetails(returnId);
-						System.out.println("Hello");
 						searchBookingDto.setReturnId(returnDetail.getReturnId());
 						searchBookingDto.setReturnNoOfSeats(returnDetail.getNoOfSeats());
 						searchBookingDto.setReturnSeatSelected(returnDetail.getSeatSelected());
